@@ -1,0 +1,97 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{hyperref}
+
+\title{Optymalizator}
+\author{Stanisław Bitner, Mikołaj Bulge, Jakub Dawidowicz,\\Antoni Grodowski, Szymon Mrozicki}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Motywacja}
+Jednym z kluczowych problemów polskiej farmaceutyki jest brak
+prostego i jednolitego systemu służącego do obsługi oficjalnych
+danych dostarczanych przez Ministerstwo Zdrowia i Narodowy Fundusz
+Zdrowia. Dostęp do wszelkich informacji dotyczących leków i ich
+refundacji wiąże się, z męczącym i niezwykle czasochłonnym procesem
+znalezienia ich wewnątrz chaotycznej i nieuporządkowanej bazy danych.
+Co więcej, znalezione informacje bywają nieaktualne lub ze sobą
+sprzeczne. W obliczu przeciążonego systemu opieki zdrowotnej w Polsce
+personel medyczny nie może sobie pozwolić na tak nieefektywne metody
+wyszukiwania danych. Obecnie nie ma na rynku prostego w obsłudze
+oprogramowania wychodzącego naprzeciw powyższym problemom.
+
+\section{Opis}
+\textit{\href{https://polmed.pl}{PolMed}} jest firmą farmaceutyczną,
+która od wielu lat doskonali różne metody na wytwarzanie
+i dystrybucję leków. Brakuje jej jednak nowoczesnego narzędzia
+umożliwiającego prostą i efektywną komunikację między poszczególnymi
+sektorami. Nasz zespół poświęcił wiele czasu na analizę obecnej
+sytuacji na rynku oraz wymagań personelu medycznego i pacjentów.
+Dzięki temu jesteśmy w stanie zaproponować wstępny szkic aplikacji,
+która w nowoczesny i rewolucyjny sposób rozwiąże powyższe problemy.
+\begin{enumerate}
+    \item Poprzez natłok koncernów farmaceutycznych na rynku w ostatnich latach
+      pojawiło się niezliczenie wiele nowych leków. Siłą rzeczy, mając na
+      uwadze ograniczoną liczbę chorób, leki te często są sobie równoważne ze
+      względu na substancję czynną, ale niekoniecznie w kwestii ceny. Z tego
+      powodu pacjenci stoją przed skomplikowanym problemem optymalizacji
+      kosztów leczenia. Proces ten zostanie ułatwiony dzięki naszej aplikacji,
+      która po wprowadzeniu danych będzie dokonywać wielokryterialnej analizy
+      potrzeb pacjenta i według tego proponować zestaw najbardziej opłacalnych
+      planów kuracji.
+    \item Niestety ze względu na chaotyczne prowadzenie dokumentacji leków
+      przez podmioty zajmujące się sektorem zdrowotnym, niekiedy bardzo trudno
+      jest znaleźć szukane informacje o interesujących nas preparatach.
+      Proponujemy stworzenie wewnętrznego systemu informacji o lekach, który
+      zawierałby zintegrowane informacje z wielu źródeł danych. Dzięki temu
+      informacje o wyszukiwanych preparatach byłyby pełne i spójne.
+    \item Leki często zawierają więcej niż jedną substancję czynną. Sprawia to,
+      że dany preparat może działać pozytywnie na jedną chorobę, ale powodować
+      niepożądane skutki w połączeniu z inną dolegliwością pacjenta. Sprawia
+      to, że lekarz podczas wypisywania recepty musi łączyć wiele informacji na
+      temat przeciwwskazań, co nie tylko zabiera cenny czas, ale może także
+      doprowadzić do niepożądanych efektów. Dlatego proponujemy w aplikacji
+      funkcjonalność, która według wprowadzonych przez użytkownika chorób
+      pacjenta, będzie proponować leki, które nie będą konfliktować
+      z dolegliwościami leczonego.
+    \item Gdy kuracja pacjenta wymaga większej ilości leków, często można
+      się spotkać, z tym że w danej aptece nie można skompletować wymaganej
+      listy preparatów. Wówczas kupujący musi poświęcić wiele czasu na
+      sprawdzenie dostępności w wielu aptekach i zaplanowaniu odpowiedniej
+      kolejności odwiedzenia placówek farmaceutycznych. Problem ten rozwiążemy
+      poprzez automatyczne wielokryterialne (np. ze względu na koszt lub czas)
+      wyznaczanie kilku odpowiednich tras.
+    \item Epidemia COVID uświadomiła nam, jak wielu ludzi preferuje zakupy przez
+      Internet. W szczególności w przypadku osób chorych jest to niezwykle
+      istotne, ponieważ często potrzebują one danego zbioru leków, ale nie mają
+      możliwości wyjścia z domu. Proponowana przez nas aplikacja
+      przeszukiwałaby apteki internetowe i automatycznie dokonywałaby
+      zamówienia optymalnego ze względu na koszt lub czas dostawy produktów
+      dodanych z ogólnej puli leków dodanych do koszyka.
+\end{enumerate}
+
+Proponowany projekt będzie korzystać między innymi z danych udostępnionych
+przez Ministerstwo Zdrowia na temat
+\href{https://www.gov.pl/web/zdrowie/obwieszczenia-ministra-zdrowia-lista-lekow-refundowanych?fbclid=IwAR3kUJzPeXQa_i6aKzo8EIS-HuLgArTdgc19OfAbQsrTF7Xd2xNiUIUym7c}{leków
+refundowanych}. Ponadto kwestie prawne związane z branżą farmaceutyczną są
+wyjątkowo skomplikowane (w szczególności te dotyczące refundacji oraz
+zamienników leków), więc podczas rozwijania projektu będziemy korzystać
+z \href{https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20111220696/U/D20110696Lj.pdf}{podstaw
+prawnych} opublikowanych przez sejm. 
+
+\section{Podsumowanie}
+Stopień skomplikowania projektu jest na tyle wysoki, że jego realizację będzie
+przebiegała etapowo. Po przeprowadzeniu dogłębnej analizy potrzeb firmy PolMed
+nasi eksperci zdecydowali, że najwyższym priorytetem są problemy, z którymi
+zmagają się pacjenci. W wyniku kryzysu gospodarczego nadzwyczaj ważne stało się
+oszczędzanie. W związku z tym pierwszą fazą projektu będzie dostarczenie
+narzędzia do optymalizacji kosztów leczenia.
+
+\end{document}
