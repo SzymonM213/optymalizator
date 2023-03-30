@@ -1,0 +1,111 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+\title{Optymalizator -- opis wymagań}
+\author{Stanisław Bitner, Mikołaj Bulge, Jakub Dawidowicz,\\Antoni Grodowski, Szymon Mrozicki}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Wstęp}
+
+Użytkownik chcący poznać informacje na temat zamienników wybranego leku
+refundowanego poprzez wyszukiwarkę aplikacji WWW otrzymuje pełną listę
+dostępnych odpowiedników. Przedstawione dane mogą być  sortowane według potrzeb
+użytkownika.
+
+\section{Wymagania funkcjonalne}
+
+\subsection{Wyszukiwarka leku refundowanego.}
+
+\begin{enumerate}
+    \item Użytkownik, posiadając urządzenie z dostępem do internetu oraz
+      przeglądarką Chrome 109 lub Firefox 102.9.0 bądź nowszą ma możliwość
+      korzystania z aplikacji.
+    \item Użytkownik korzysta z wyszukiwarki, wpisując w pole wyszukiwania
+      odpowiednie frazy opisane w poniższym podpunkcie.
+    \item Użytkownik może wyszukać lek refundowany podając kod EAN leku. Innym
+      sposobem wyszukania jest podanie takich parametrów jak: nazwa, zawartość
+      opakowania, substancja czynna. Dokładniej -- po wpisaniu słów w pole
+      wyszukiwania, każdy wynik musi zawierać wszystkie te słowa. Wielkości
+      liter oraz znaki polskie nie mają znaczenia. Z dostępnej listy użytkownik
+      wybiera interesujący go lek. W przypadku, gdy lista wynikowa jest pusta,
+      użytkownik otrzyma komunikat o braku dostępnych zamienników.
+    \item Kolejność proponowanych leków jest zależna od częstotliwości, z jaką
+      były one wyszukiwane przez wcześniej korzystających z aplikacji
+      użytkowników. W przypadku, gdy leki są wyszukiwane z równą
+      częstotliwością, o kolejności proponowanych leków decyduje kolejność
+      alfabetyczna.
+    
+\end{enumerate}
+
+\subsection{Prezentacja listy zamienników.}
+
+\begin{enumerate}
+    \item Po skorzystaniu z wyszukiwarki i znalezieniu odpowiedniego leku
+      użytkownik otrzymuje listę leków refundowanych, które mogą służyć jako
+      zamienniki.
+    \item Znalezione zamienniki wyświetlane są w kolejności od najtańszych do
+      najdroższych. Użytkownik według preferencji może wybrać, czy dane mają
+      być posortowane alfabetycznie, według ceny, czy wielkości opakowania,
+      jeżeli opakowanie jest przeznaczone na konkretną liczbę aplikacji leku.
+    \item Leki, na temat których nie ma wystarczająco precyzyjnych informacji
+      w bazie, nie będą obsługiwane przez aplikację. Aplikacja obsługuje co
+      najmniej 95\% wszystkich leków z bazy danych, a o nieobsługiwaniu
+      wybranego leku informuje użytkownika.
+    \item Jeżeli pewien lek nie jest obsługiwany, to wszystkie leki zawierające
+      tę samą substancję czynną również nie są obsługiwane przez aplikację.
+    \item W przypadku, gdy któryś z wyszukanych przez aplikację leków
+      zamiennych, z powodu nieprecyzyjności informacji w bazie, nie może
+      jednoznacznie zostać zakwalifikowany do grupy zamienników, lub odrzucony,
+      użytkownik zostanie poinformowany o możliwości istnienia zamiennika.
+\end{enumerate}
+
+\subsection{Lista wspieranych jednostek i ich skrótów}
+
+Użytkownicy na stronie aplikacji będą mieć możliwość otworzenia pliku
+tekstowego z wymienionymi jednostkami (oraz ich skrótami), obsługiwanymi przez
+wyszukiwarkę aplikacji, służącymi do wyrażania policzalności leku.
+
+\section{Wymagania niefunkcjonalne}
+
+\subsection{Połączenie z serwerem.}
+
+Użytkownik połączony z internetem o przepustowości co najmniej 4 mb/s może korzystać z aplikacji połączonej z serwerem zewnętrznym.
+
+\subsection{Baza danych.}
+
+ Aplikacja w celu przechowywania danych będzie korzystać z bazy danych PostgreSQL.
+ Wyniki wyszukiwania aplikacji będą przedstawione w takiej samej formie, jak
+ w oryginalnym zestawieniu leków refundowanych, które można znaleźć na krajowej
+ \href{https://www.gov.pl/attachment/e1c2cf1e-8fed-468a-9f1f-e6d49f5b137f}{liście
+ leków (www.gov.pl)}. Dane, z których będzie korzystała aplikacja, będą
+ pochodzić z marca 2023 i nie będą aktualizowane na bieżąco.
+
+\subsection{Szybkość wskazywania wyników wyszukiwania.}
+ 
+Zapytania o wyniki wyszukiwań będą obsługiwane w mniej niż jedną sekundę.
+
+\subsection{Przepustowość aplikacji.}
+
+Z aplikacji może korzystać co najwyżej 100 użytkowników jednocześnie, w przeciwnym wypadku czas wyszukiwań lub niezawodność aplikacji nie muszą zostać spełnione.
+
+\section{Definicja odpowiednika leku}
+
+% Lek jest odpowiednikiem drugiego leku wtedy i tylko wtedy, gdy
+% Niech $p, q$ będą lekami.
+% Mówimy, że
+% $$p \in odp(q) \iff subst(p) = subst(q) \land dawka(p) \in [0.9 \cdot dawka(q), 1.1 \cdot dawka(q)$$
+Odpowiednik to lek zawierający taką samą substancję czynną w takiej samej dawce
+i takiej samej postaci jak lek oryginalny. Rozmiar opakowania odpowiednika,
+czyli łączna zawartość substancji czynnej w opakowaniu nie różni się o więcej
+niż 10\% względem zawartości oryginalnego leku. Wskazania refundacyjne są takie
+same.
+
+\end{document}
