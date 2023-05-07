@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'optymalizator_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,10 +52,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'optymalizator.urls'
 
+import os
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join('optymalizator_app', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
