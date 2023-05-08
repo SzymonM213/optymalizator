@@ -39,14 +39,20 @@ h1 {
 .search-box {
   position: relative;
   width: 100%;
-  max-width: 360px;
+  max-width: 600px;
   height: 60px;
   border-radius: 120px;
   margin: 0 auto;
+  padding: 0 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  border: 2px solid #eee;
+  transition: all 0.5s ease;
+}
+
+.search-box:hover, .search-box:focus-within {
+  box-shadow: 0 0 0 1px #eee;
 }
 
 .search-box::before {
@@ -59,36 +65,44 @@ h1 {
 }
 
 .search-box:hover::before, .search-box:focus-within::before {
-  color: #fff;
+  color: #eee;
+}
+
+.search-form {
+  width: 95%;
+  height: 100%;
 }
 
 #search {
-  width: 100%;
+  width: 95%;
   height: 100%;
-  border-radius: 120px;
   outline: none;
   border: none;
   background: rgba(255,255,255,0);
-  padding: 0 68px 0 68px;
-  color: #FFFFFF;
+  padding: 0 6px 0 16px;
+  color: #eee;
   font-size: 1.32em;
   font-weight: 400;
   letter-spacing: -0.015em;
 }
 
 .search-box-right {
+  width: 5%;
   cursor: text;
   background: transparent;
   color: transparent;
-  position: absolute;
   right: 0;
   top: 50%;
-  transform: translateY(-50%) translateX(-100%);
+  transform: translateX(-50%);
   transition: all 0.5s ease;
+}
+
+.search-box:hover::after, .search-box:focus-within::after {
+  color: #eee;
 }
 
 .search-box-right.active {
   cursor: pointer;
-  transform: translateY(-50%) translateX(0%);
-  color: #fff;
+  transform: translateX(0%);
+  color: #eee;
 }
