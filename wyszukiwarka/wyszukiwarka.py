@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import json
 
 from helper import *
 from data_import import *
@@ -88,9 +89,30 @@ def read(input):
     return filter_res
 
 
-input = " 2+0,035mg 20 kapsułek Cyproteronum + Ethinylestradiolum  20 szt.  "
-read(input)
-
-
 def write(filter_res):
-    pass # TODO
+    df_res = df_xlsx.copy() # deep copy
+
+    for key, value in filter_res.items():
+        col_name = values_to_corresponding_columns.get(key)
+        df_res = df_res[df_xlsx[col_name].str.lower().str.contains(value)]
+
+    df_res = df_res.iloc[:, 1:5]
+    json_str = df_res.to_json(orient='table', index=False)
+    json_dict = json.loads(json_str)
+
+    fields = [f['name'] for f in json_dict['schema']['fields']]
+    data = [list(d.values()) for d in json_dict['data']]
+    output_dict = {field: [d[i] for d in data] for i, field in enumerate(fields)}
+    new_dict = {http_and_columns[k]: v for k, v in output_dict.items()}
+    res_list = return_list(new_dict)
+    print("RESULT:")
+    print(res_list)
+
+    return res_list
+
+
+# input = " 2+0,035mg 20 kapsułek Cyproteronum + Ethinylestradiolum  20 szt.  "
+input = "Cyproteroni acetas"
+read_res = read(input)
+
+write(read_res)
