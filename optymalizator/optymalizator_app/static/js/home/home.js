@@ -1,3 +1,10 @@
+const csrftoken = Cookies.get('csrftoken');
+$.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+  }
+});
+
 $(document).ready(function () {
   searchBoxRight = document.querySelector('.search-box-right');
   search = document.getElementById('search');
@@ -14,16 +21,12 @@ $(document).ready(function () {
     if (search.value == "") return;
 
     const data = {
-      'input': search.value,
+      'input_text': search.value,
     };
 
-    console.log(data);
-    return;
-
-    // TODO: make it complient with docs, add error handling
     $.ajax({
       type: 'POST',
-      url: '/search',
+      url: 'search/',
       data: data,
       success: function (data) { location.reload(); },
     });
