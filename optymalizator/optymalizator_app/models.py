@@ -18,5 +18,5 @@ class LekiRefundowane(models.Model):
 
 
 class LicznikWyszukan(models.Model):
-    ean = models.CharField(default="")
+    ean = models.BigIntegerField(default="")
     ctr = models.IntegerField(default=0)
