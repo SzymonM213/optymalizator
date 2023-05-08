@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine
 
-LekiRefundowane = pd.read_csv('leki_z_apteki.csv').iloc[:, 1:]
+LekRefundowany = pd.read_csv('leki_z_apteki.csv').iloc[:, 1:]
 
 # Przed odpaleniem pobierz postgresa na komputer. Musisz utworzyć użytkownika root o haśle root.
 # Dla roota musi zostac stworzony database o nazwie lekidb - więcej info w settings.py projektu Django.
 engine = create_engine('postgresql://root:root@localhost:5432/lekidb')
-LekiRefundowane.to_sql('optymalizator_app_lekirefundowane', engine, if_exists='append', index=False)
+LekRefundowany.to_sql('optymalizator_app_lekrefundowany', engine, if_exists='append', index=False)

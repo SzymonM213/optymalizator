@@ -1,0 +1,149 @@
+*{
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat Alternates', sans-serif, 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #3a2e5c;
+  color: #fff;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 2rem 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: #000;
+}
+
+.card > .ean {
+  color: #808080;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.card > .main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #000;
+  font-size: 1.5rem;
+}
+
+.card > .main-content > .left {
+  width: 85%;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card > .main-content > .right {
+  height: 100%;
+  width: 15%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card > .main-content > .left > p {
+  margin-right: 2rem;
+}
+
+.card > .main-content > .right > p {
+  margin: auto;
+  right: 0;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.top-btn {
+  opacity: 0;
+  pointer-events: none;
+  cursor: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+
+  transform: translateY(100%);
+  transition: all 0.3s ease-in-out, transform 0.2s ease-in-out;
+
+}
+
+.top-btn.active {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translateY(0);
+
+  color: #3a2e5c;
+  background-color: #fff;
+}
+
+.top-btn.active:hover {
+  background-color: #3a2e5c;
+  color: #fff;
+}
+
+.top-btn > i {
+  font-size: 1.3rem;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: auto;
+  cursor: pointer;
+  position: absolute;
+
+  top: 0;
+  left: 2rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  color: #3a2e5c;
+  background-color: #ddd;
+
+  transform: translateY(100%);
+  transition: all 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.back-btn > i {
+  font-size: 1.3rem;
+}
+
+.back-btn:hover {
+  background-color: #3a2e5c;
+  color: #fff;
+}

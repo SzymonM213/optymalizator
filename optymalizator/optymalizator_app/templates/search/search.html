@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Listview of Cards</title>
+
+  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+
+  <link rel="stylesheet" href="{% static 'css/search/search.css' %}">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Wybierz lek</h1>
+    <ul>
+      {% for drug in json_list %}
+      <li class="card" id="{{drug.id}}" onclick="send_request({{drug.id}})">
+        <p class="ean">EAN: {{drug.ean}}</p>
+        <div class="main-content">
+          <div class="left">
+            <p>{{drug.nazwa}}</p>
+            <p>{{drug.postac}}</p>
+            <p>{{drug.zawartosc_opakowania}}</p>            
+            <p>{{drug.substancja_czynna}}</p>
+            <p>{{drug.dawka}}</p>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <script>
+    function send_request(id) {
+      const data = {
+        'selected': id,
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: '/optimize/',
+        data: data,
+        success: function (data) { location.href = '/optimize/'; },
+      });
+    }
+  </script>
+
+  <div class="top-btn">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <div class="back-btn">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+
+  <script src="{% static 'js/search/search.js' %}"></script>
+</body>
+
+</html>

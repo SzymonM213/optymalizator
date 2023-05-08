@@ -18,7 +18,8 @@ def search(request):
         context = {
             'json_list': json_list
         }
-        return render(request, 'home/search.html', context)  # TODO: ui do wyników wyszukiwania (Mikołaj)
+        return render(request, 'search/search.html', context)  # TODO: ui do wyników wyszukiwania (Mikołaj)
+        
     return home(request)
 
 def optimize(request):
