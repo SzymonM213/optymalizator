@@ -82,3 +82,28 @@ def return_and_cut_number_and_szt(text):
         text = re.sub(regex, '', text, count=1)
         return [text, match.group(1) + match.group(2)]
     return [text, ""]
+
+
+def return_list(data):
+    new_data = {}
+    for key, values in data.items():
+        if key == 'nazwa_postac_dawka':
+            new_keys = ['nazwa', 'postac', 'dawka']
+            for value in values:
+                value_parts = value.split(', ')
+                for i in range(len(new_keys)):
+                    new_key = new_keys[i]
+                    new_value = value_parts[i]
+                    if new_key in new_data:
+                        new_data[new_key].append(new_value)
+                    else:
+                        new_data.update({new_key: [new_value]})
+                    
+        elif key == 'ean':
+            new_data[key] = ['0' + str(value) for value in values]
+        else:
+            new_data[key] = values
+        
+    rows = [dict(zip(new_data.keys(), values)) for values in zip(*new_data.values())]
+
+    return rows
