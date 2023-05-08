@@ -19,16 +19,17 @@
     <ul>
       {% for drug in drugs %} <!-- bierzemy dragi xddd -->
       <li class="card" data-id="{{drug.pk}}">
+        <p class="ean">EAN: {{drug.ean}}</p>
         <div class="main-content">
           <div class="left">
             <p>{{drug.nazwa}}</p>
             <p>{{drug.postac}}</p>
             <p>{{drug.dawka}}</p>
             <p>{{drug.zawartosc_opakowania}}</p>
-            <p>{{drug.grupa_limitowana}}</p>
+            <p>{{drug.zakres_wskazan}}</p>
           </div>
           <div class="right">
-            <p>{{drug.cena|floatformat:2|add:' zł'}}</p>
+            <p>{{ drug.cena }}</p>
           </div>
         </div>
       </li>

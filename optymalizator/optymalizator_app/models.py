@@ -16,6 +16,9 @@ class LekRefundowany(models.Model):
     poziom_odplatnosci = models.CharField(max_length=32, default="", null=False)   
     wysokosc_doplaty = models.IntegerField(default = 0, null=False) 
 
+    def cena(self):
+        result = str(self.wysokosc_doplaty)
+        return f"{result[:-2]},{result[-2:]} zł"
 
 class LicznikWyszukan(models.Model):
     lp = models.IntegerField(default=0, unique=True, null=False)
