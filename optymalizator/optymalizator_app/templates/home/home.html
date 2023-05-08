@@ -28,25 +28,7 @@
     </div>
   </div>
 
-  <script>
-    searchBoxRight = document.querySelector('.search-box-right');
-    search = document.getElementById('search');
-    search.addEventListener('input', function () {
-      if (search.value == "") {
-        searchBoxRight.classList.remove('active');
-      } else {
-        searchBoxRight.classList.add('active');
-      }
-    })
-
-    searchBoxRight.addEventListener('click', function () {
-      if (searchBoxRight.classList.contains('active')) {
-        console.log(search.value)
-        // TODO: send json to server using AJAX or builtin django forms
-      }
-    })
-  </script>
-
+  <script src="{% static 'js/home/home.js' %}"></script>
 </body>
 
 </html>
