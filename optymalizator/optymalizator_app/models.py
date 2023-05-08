@@ -18,5 +18,5 @@ class LekiRefundowane(models.Model):
 
 
 class LicznikWyszukan(models.Model):
-    lek = models.ForeignKey(LekiRefundowane, default=0, related_name='lek', on_delete=models.CASCADE)
+    lp = models.IntegerField(unique=True, null=False)
     ctr = models.IntegerField(default=0)
