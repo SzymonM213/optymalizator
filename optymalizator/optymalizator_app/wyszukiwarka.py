@@ -14,7 +14,12 @@ def write(filter_res):
     df_res = df_xlsx.copy() # deep copy
 
     for key, value in filter_res.items():
-        df_res = df_res[df_xlsx[key].str.lower().str.contains(value)]
+        # print(type(value))
+        if (key == "ean"):
+            value = [int(value)]
+            df_res = df_res[df_xlsx[key].isin(value)]
+        else:
+            df_res = df_res[df_xlsx[key].str.lower().str.contains(value)]
 
     df_res = df_res.iloc[:, 0:8]
     json_str = df_res.to_json(orient='table', index=False)
@@ -44,7 +49,7 @@ def read(input):
     input = " ".join(split_input)
     ean = ean_res[1]
     if (ean != ""):
-        return filter_res.update({"ean": ean})
+        filter_res.update({"ean": ean})
 
     # Extracting and cutting name or substance if they exist.
     name_res = read_and_cut(split_input, all_names)
@@ -65,7 +70,7 @@ def read(input):
         # print("substancja_czynna: ")
         # print(substance)
 
-    if (name == "" and substance == ""):
+    if (name == "" and substance == "" and ean == ""):
         return None  # TODO return error
     
     # # Extracting and cutting dose if it exists.
@@ -100,15 +105,17 @@ def read(input):
         # print("postac: ")
         # print(form)
 
-    print("input: ")
-    print(input)
+    # print("input: ")
+    # print(input)
     if (input != "" and not input.isspace()):
-        print("ERROR")
+        # print("ERROR")
         return None
     
+    # print("FILTER RES: ")
+    # print(filter_res)
     # print(filter_res)
     return write(filter_res)
 
 
-# input = "Desloratadinum 30 szt."
+# input = "05909990893423"
 # print(read(input))
