@@ -100,22 +100,35 @@ def read(input):
     form = form_res[1]
     input = form_res[0]
     if (form != ""):
+        print("AADKJFKLSJFKLDSJSAAAAAAAFADFAFAFAFFAAFAFAFAFAFA")
         form = one_space_between_number_and_word(form)
+        form.strip()
+        print(form)
         filter_res.update({"postac": form})
         # print("postac: ")
         # print(form)
+    if (content == ""):
+        if (any(char.isdigit() for char in form)):
+            value_temp = filter_res["postac"]
+            del filter_res["postac"]
+            filter_res.update({"zawartosc_opakowania": value_temp})
 
-    # print("input: ")
-    # print(input)
+    # check if input consists any of abbv_map values
+    for abbv_item in abbv_list:
+        if (abbv_item in input):
+            input = input.replace(abbv_item, "")
+            for key, value in abbv_map.items():
+                if abbv_item in value:
+                    abbv_item = key
+                    break
+            filter_res.update({"postac": abbv_item})
+            break
     if (input != "" and not input.isspace()):
         # print("ERROR")
         return None
     
-    # print("FILTER RES: ")
-    # print(filter_res)
-    # print(filter_res)
     return write(filter_res)
 
 
-# input = "05909990893423"
-# print(read(input))
+input = "Amlodipini besilas 30 szt. tabl."
+print(read(input))
