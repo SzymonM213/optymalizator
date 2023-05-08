@@ -2,9 +2,9 @@ import pandas as pd
 
 import os.path
 
-from .models import LekiRefundowane
+from .models import LekRefundowany
 
-query_set = LekiRefundowane.objects.all()
+query_set = LekRefundowany.objects.all()
 data = list(query_set.values())
 df_xlsx = pd.DataFrame(data)
 
