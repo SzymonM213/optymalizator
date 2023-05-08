@@ -17,157 +17,22 @@
   <div class="container">
     <h1>Znalezione odpowiedniki</h1>
     <ul>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
+      {% for drug in drugs %} <!-- bierzemy dragi xddd -->
+      <li class="card" data-id="{{drug.pk}}">
         <div class="main-content">
           <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
+            <p>{{drug.nazwa}}</p>
+            <p>{{drug.postac}}</p>
+            <p>{{drug.dawka}}</p>
+            <p>{{drug.zawartosc_opakowania}}</p>
+            <p>{{drug.grupa_limitowana}}</p>
           </div>
           <div class="right">
-            <p> Cena: 10 zł </p>
+            <p>{{drug.cena|floatformat:2|add:' zł'}}</p>
           </div>
         </div>
       </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie, nadciśnienie, nadciśnienie, nadciśnienie, nadciśnienie, , nadciśnienie,
-              nadciśnienie, nadciśnienie, nadciśnienie, nadciśnienie, nadciśnienie, nadciśnienie, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
-      <li class="card">
-        <p class="ean"> EAN: 1234567890123 </p>
-        <div class="main-content">
-          <div class="left">
-            <p> Nazwa: Paracetamol </p>
-            <p> Postać: tabletki </p>
-            <p> Dawka: 500mg </p>
-            <p> Opakowanie: 20 szt. </p>
-            <p> Choroby: cukrzyca, nadciśnienie </p>
-          </div>
-          <div class="right">
-            <p> Cena: 10 zł </p>
-          </div>
-        </div>
-      </li>
+      {% endfor %}
     </ul>
   </div>
 
