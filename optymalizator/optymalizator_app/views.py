@@ -1,10 +1,13 @@
 from django.shortcuts import render
 
+from .wyszukiwarka import read
+
+
 # TODO: create database model (Kuba)
 
 def home(request):
-    # return render(request, 'home/home.html')
-    return optimize(request)
+    return render(request, 'home/home.html')
+
 
 def search(request):
     if (request.method == 'POST'):
