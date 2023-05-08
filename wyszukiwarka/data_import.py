@@ -11,6 +11,22 @@ all_substances = [subst.lower() for subst in all_substances]
 all_names = df_xlsx['Nazwa  postać i dawka'].str.split(', ', expand=True)[0].unique()
 all_names = [name.lower() for name in all_names]
 
+values_to_corresponding_columns = {
+    'ean': 'Numer GTIN lub inny kod jednoznacznie identyfikujący produkt',
+    'name': 'Nazwa  postać i dawka',
+    'form': 'Nazwa  postać i dawka',
+    'dose': 'Nazwa  postać i dawka',
+    'substance': 'Substancja czynna',
+    'content': 'Zawartość opakowania',
+}
+
+http_and_columns = {
+    'Substancja czynna': 'substancja_czynna',
+    'Nazwa  postać i dawka': 'nazwa_postac_dawka',
+    'Zawartość opakowania': 'zawartosc',
+    'Numer GTIN lub inny kod jednoznacznie identyfikujący produkt': 'ean',
+}
+
 
 # Returned columns: +"ean": "String",
 #                   +"nazwa": "String",
