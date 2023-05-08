@@ -7,10 +7,17 @@ def home(request):
     return optimize(request)
 
 def search(request):
-    if request.method == 'POST':
+    if (request.method == 'POST'):
         input_text = request.POST['input_text']
-        print(input_text)
-        # TODO: parse input_text into json (Antek)
+        if (input_text == ""):
+            return home(request)
+        json_list = read(input_text)
+        if (json_list == None):
+            return home(request)
+        context = {
+            'json_list': json_list
+        }
+        return render(request, 'home/search.html', context)
     return home(request) # TODO: return search results (Mikołaj)
 
 def optimize(request):
