@@ -3,7 +3,8 @@ from django.shortcuts import render
 # TODO: create database model (Kuba)
 
 def home(request):
-    return render(request, 'home/home.html')
+    # return render(request, 'home/home.html')
+    return optimize(request)
 
 def search(request):
     if request.method == 'POST':

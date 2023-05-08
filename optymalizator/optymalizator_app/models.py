@@ -1,6 +1,6 @@
 from django.db import models
 
-class LekiRefundowane(models.Model):
+class LekRefundowany(models.Model):
     lp = models.IntegerField(default=0, unique=True, null=False)
     substancja_czynna = models.TextField(default="", null=False)
     nazwa = models.TextField(default="", null=False)
