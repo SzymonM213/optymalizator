@@ -17,4 +17,4 @@ def optimize(request):
         selected = request.POST['selected']
         print(selected)
         # TODO: parse selected into json (Szymon)
-    return home(request) # TODO: return optimize results (Staszek)
+    return render(request, 'optimize/optimize.html') # TODO: return optimize results - ui zrobione, ale trzeba jeszcze sparsować kontekst do htmla (Staszek)
