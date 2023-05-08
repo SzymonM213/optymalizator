@@ -100,7 +100,6 @@ def read(input):
     form = form_res[1]
     input = form_res[0]
     if (form != ""):
-        print("AADKJFKLSJFKLDSJSAAAAAAAFADFAFAFAFFAAFAFAFAFAFA")
         form = one_space_between_number_and_word(form)
         form.strip()
         print(form)
@@ -130,5 +129,5 @@ def read(input):
     return write(filter_res)
 
 
-input = "Amlodipini besilas 30 szt. tabl."
-print(read(input))
+# input = "Amlodipini besilas 30 szt. tabl."
+# print(read(input))
