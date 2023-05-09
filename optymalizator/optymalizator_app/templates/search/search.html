@@ -15,8 +15,15 @@
 
 <body>
   <div class="container">
-    <h1>Wybierz lek</h1>
-    <ul>
+    <!-- Search bar like in google at first filled with {{input_text}} -->
+    <div class="search-box">
+      <form action="" class="search-form">
+        {% csrf_token %}
+        <input type="text" placeholder="Wyszukaj" id="search" value="{{input_text}}" autocomplete="off">
+      </form>
+    </div>
+
+    <ul class="drug-list">
       {% for drug in json_list %}
       <li class="card" id="{{drug.id}}" onclick="send_request({{drug.id}})">
         <p class="ean">EAN: {{drug.ean}}</p>
@@ -51,10 +58,6 @@
 
   <div class="top-btn">
     <i class="fas fa-arrow-up"></i>
-  </div>
-
-  <div class="back-btn">
-    <i class="fas fa-arrow-left"></i>
   </div>
 
   <script src="{% static 'js/search/search.js' %}"></script>
