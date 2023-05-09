@@ -4,7 +4,7 @@
 <html>
 
 <head>
-  <title>Listview of Cards</title>
+  <title>Optymalizator</title>
 
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,10 +16,10 @@
 <body>
   <div class="container">
     <h1>Znalezione odpowiedniki</h1>
+    {% if not drugs %}
+      <h1 align="center">Nie znaleziono odpowiedników</h1>
+    {% else %}
     <ul>
-      {% if not json_list %}
-        <h1 align="center">Nie znaleziono odpowiedników</h1>
-      {% endif %}
       {% for drug in drugs %}
       <li class="card" data-id="{{drug.pk}}">
         <p class="ean">EAN: 0{{drug.ean}}</p>
@@ -38,6 +38,7 @@
       </li>
       {% endfor %}
     </ul>
+    {% endif %}
   </div>
 
   <div class="top-btn">

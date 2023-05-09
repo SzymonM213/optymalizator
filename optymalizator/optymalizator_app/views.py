@@ -1,12 +1,11 @@
-from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render
+from django.http import JsonResponse
 from .wyszukiwarka import read
 
 from .substitutes import find_substitutes
-from .models import LekRefundowany
+from .models import LekRefundowany, LicznikWyszukan
 
 def home(request):
-    # request.session['input_text'] = ""
     request.session['json_list'] = []
     return render(request, 'home/home.html')
 
@@ -53,23 +52,14 @@ def get_search_results(request):
     
 
 def optimize(request):
-    selected = request.sesssion["selected"]
-    # if request.method == 'POST':
-    #     # selected = request.POST['selected']
-    #     request.session['selected'] = request.POST['selected']
-    #     selected = LekRefundowany.objects.all().get(pk=request.POST['selected'])
-    #     context = { "drugs" : find_substitutes(selected) }
-    #     print(selected.nazwa)
-    #     print("FIND SUBSTITUTES:")
-    #     print(find_substitutes(selected))
-    #     return render(request, 'optimize/optimize.html', context)
+    selected = request.session["selected"]
+    selected = LekRefundowany.objects.all().get(pk=selected)
     context = { "drugs" : find_substitutes(selected) }
     return render(request, 'optimize/optimize.html', context)
 
 
 def get_optimize_results(request):
     if (request.method == 'POST'):
-        selected = LekRefundowany.objects.all().get(pk=request.POST['selected'])
         request.session["selected"] = request.POST["selected"]
-        return HttpResponse("SUCCESS")
-    return HttpResponse("ERROR")
+        return JsonResponse({'success': 'true'})
+    return JsonResponse({'success': 'false'})
