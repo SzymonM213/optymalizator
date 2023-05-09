@@ -129,5 +129,5 @@ def read(input):
     return write(filter_res)
 
 
-# input = "Amlodipini besilas 30 szt. tabl."
-# print(read(input))
+input = "Amlodipini besilas 30 szt. tabl."
+print(read(input))

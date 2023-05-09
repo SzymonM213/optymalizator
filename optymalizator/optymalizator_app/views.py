@@ -12,6 +12,7 @@ def home(request):
 
 def search(request):
     if (request.method == 'POST'):
+        request.session['json_list'] = None
         input_text = request.POST['input_text']
         if (input_text == ""):
             return home(request)
@@ -21,14 +22,20 @@ def search(request):
         context = {
             'json_list': json_list
         }
+        request.session['json_list'] = json_list
         return render(request, 'search/search.html', context)  # TODO: ui do wyników wyszukiwania (Mikołaj)
-        
-    return home(request)
+
+    json_list = request.session.get('json_list')
+    context = {
+        'json_list': json_list
+    }
+    return render(request, 'search/search.html', context)
 
 def optimize(request):
     selected = None
     if request.method == 'POST':
-        selected = request.POST['selected']
+        # selected = request.POST['selected']
+        selected = LekRefundowany.objects.all().get(pk=request.POST['selected'])
     else: #DEBUG
         selected = LekRefundowany.objects.all().get(pk=420)
     context = { "drugs" : find_substitutes(selected) }
