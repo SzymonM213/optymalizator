@@ -2,8 +2,6 @@ import pandas as pd
 import re
 import json
 
-# from .helper import *
-# from .data_import import *
 from optymalizator_app.helper import *
 from optymalizator_app.data_import import *
 
@@ -19,7 +17,7 @@ def write(filter_res):
             value = [int(value)]
             df_res = df_res[df_xlsx[key].isin(value)]
         else:
-            df_res = df_res[df_xlsx[key].str.lower().str.contains(value)]
+            df_res = df_res[df_xlsx[key].str.lower().str.contains(value.replace('+', '\+'))]
 
     df_res = df_res.iloc[:, 0:8]
     json_str = df_res.to_json(orient='table', index=False)
@@ -67,8 +65,8 @@ def read(input):
     substance = substance_res[1]
     if (substance != ""):
         filter_res.update({"substancja_czynna": substance})
-        # print("substancja_czynna: ")
-        # print(substance)
+        print("substancja_czynna: ")
+        print(substance)
 
     if (name == "" and substance == "" and ean == ""):
         return None  # TODO return error
@@ -126,8 +124,14 @@ def read(input):
         # print("ERROR")
         return None
     
+    # print("FILTER_RES:")
+    # print(filter_res)
     return write(filter_res)
 
 
-input = "Amlodipini besilas 30 szt. tabl."
-print(read(input))
+# input = "Acidum valproicum + Natrii valproas"
+# input = "Acidum valproicum + Natrii valproas"
+# input = "Acarbosum"
+
+# print("RESULT: ")
+# print(read(input))

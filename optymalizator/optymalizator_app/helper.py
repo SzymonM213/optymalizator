@@ -33,9 +33,16 @@ def one_space_between_number_and_word(text):
 
 # Checks if input consists a valid name or substance. If it does, it cuts the sequence from the input and list [input, name/substance] is returned.
 def read_and_cut(split_input, all_phrases):
-    for i in range(1, len(split_input) + 1):                                    # all available sequence sizes
-        for j in range(0, len(split_input) - i + 1):                            # all available starting points
+    for i in range(len(split_input) + 1, 1, -1):                                    # all available sequence sizes
+        print("i:")
+        print(i)
+        print(len(split_input) - i + 1)
+        for j in range(0, len(split_input) - i + 2):     
+            print("j:")
+            print(j)                       # all available starting points
             test_phrase = " ".join(split_input[j:j+i])
+            print("TEST_PHASEEEEEE----------------------: ")
+            print(test_phrase)
             test_phrase = test_phrase.lower()
             if (test_phrase in all_phrases):
                 # cut test phrase from split_input
