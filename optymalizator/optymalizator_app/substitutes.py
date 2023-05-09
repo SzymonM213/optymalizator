@@ -54,7 +54,8 @@ def find_substitutes(drug):
     units = int(drug.zawartosc_opakowania.split(' ')[0])
     drug_ingrs = active_ingr_to_dose(drug)
     drug_amount = get_amount(drug.zawartosc_opakowania)
-
+    # if drug_ingrs == None:
+    #     return []
     substitutes = []
     for substitute in LekRefundowany.objects.all().filter(postac=drug.postac).exclude(pk=drug.pk):
         sub_ingrs = active_ingr_to_dose(substitute)

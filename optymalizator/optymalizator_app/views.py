@@ -1,12 +1,9 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponse
 from .wyszukiwarka import read
 
 from .substitutes import find_substitutes
 from .models import LekRefundowany
-
-# TODO: poprawić modele (Kuba)
 
 def home(request):
     # request.session['input_text'] = ""
@@ -28,7 +25,7 @@ def search(request):
         }
         request.session['input_text'] = request.POST['input_text']
         request.session['json_list'] = json_list
-        return render(request, 'search/search.html', context)  # TODO: ui do wyników wyszukiwania (Mikołaj)
+        return render(request, 'search/search.html', context)
 
     input_text = request.session.get('input_text')
     json_list = request.session.get('json_list')
@@ -38,15 +35,6 @@ def search(request):
     }
     return render(request, 'search/search.html', context)
 
-def optimize(request):
-    selected = None
-    if request.method == 'POST':
-        # selected = request.POST['selected']
-        selected = LekRefundowany.objects.all().get(pk=request.POST['selected'])
-    else: #DEBUG
-        selected = LekRefundowany.objects.all().get(pk=420)
-    context = { "drugs" : find_substitutes(selected) }
-    return render(request, 'optimize/optimize.html', context)
 
 def get_search_results(request):
     if (request.method == 'POST'):
@@ -62,3 +50,26 @@ def get_search_results(request):
         request.session['json_list'] = json_list
         res = { 'json_list': json_list }
         return JsonResponse(res, safe=True)
+    
+
+def optimize(request):
+    selected = request.sesssion["selected"]
+    # if request.method == 'POST':
+    #     # selected = request.POST['selected']
+    #     request.session['selected'] = request.POST['selected']
+    #     selected = LekRefundowany.objects.all().get(pk=request.POST['selected'])
+    #     context = { "drugs" : find_substitutes(selected) }
+    #     print(selected.nazwa)
+    #     print("FIND SUBSTITUTES:")
+    #     print(find_substitutes(selected))
+    #     return render(request, 'optimize/optimize.html', context)
+    context = { "drugs" : find_substitutes(selected) }
+    return render(request, 'optimize/optimize.html', context)
+
+
+def get_optimize_results(request):
+    if (request.method == 'POST'):
+        selected = LekRefundowany.objects.all().get(pk=request.POST['selected'])
+        request.session["selected"] = request.POST["selected"]
+        return HttpResponse("SUCCESS")
+    return HttpResponse("ERROR")
