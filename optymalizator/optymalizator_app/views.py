@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 from .wyszukiwarka import read
 
+from .substitutes import find_substitutes
+
 # TODO: poprawić modele (Kuba)
 
 def home(request):
@@ -25,6 +27,8 @@ def search(request):
 def optimize(request):
     if request.method == 'POST':
         selected = request.POST['selected']
-        print(selected)
-        # TODO: zwrócenie w request listy odpowiedników (Szymon)
-    return render(request, 'optimize/optimize.html')
+        substitutes = find_substitutes(selected)
+        context = { "drugs" :  substitutes }
+    else:
+        context = { "drugs" : [] }
+    return render(request, 'optimize/optimize.html', context)
