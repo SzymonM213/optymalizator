@@ -18,6 +18,7 @@ def write(filter_res):
             df_res = df_res[df_xlsx[key].str.lower().str.contains(value.replace('+', '\+'))]
 
     df_res = df_res.iloc[:, 0:8]
+    df_res = df_res.drop_duplicates(subset=['ean'])
     json_str = df_res.to_json(orient='table', index=False)
     json_dict = json.loads(json_str)
 
@@ -26,7 +27,7 @@ def write(filter_res):
     output_dict = {field: [d[i] for d in data] for i, field in enumerate(fields)}
     new_dict = {k: v for k, v in output_dict.items()}
     res_list = return_list(new_dict)
-    res_list = sorted(res_list, key=lambda x: LicznikWyszukan.objects.get(ean=x['ean']).ctr, reverse=True)
+    res_list = sorted(res_list, key=lambda x: (LicznikWyszukan.objects.get(ean=x['ean']).ctr * (-1), x['nazwa']), reverse=False)
     return res_list
 
 
