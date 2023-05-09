@@ -21,5 +21,5 @@ class LekRefundowany(models.Model):
         return f"{result[:-2]},{result[-2:]} zł"
 
 class LicznikWyszukan(models.Model):
-    lp = models.IntegerField(default=0, unique=True, null=False)
+    ean = models.BigIntegerField(default=0, unique=True, null=False)
     ctr = models.IntegerField(default=0)

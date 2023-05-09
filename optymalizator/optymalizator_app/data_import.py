@@ -5,6 +5,8 @@ import os.path
 from .models import LekRefundowany
 
 query_set = LekRefundowany.objects.all()
+print("Tutaj")
+print(query_set)
 data = list(query_set.values())
 df_xlsx = pd.DataFrame(data)
 
