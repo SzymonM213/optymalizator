@@ -9,11 +9,13 @@ from .models import LekRefundowany
 # TODO: poprawić modele (Kuba)
 
 def home(request):
-    request.session['input_text'] = ""
+    # request.session['input_text'] = ""
+    request.session['json_list'] = []
     return render(request, 'home/home.html')
 
 def search(request):
     if (request.method == 'POST'):
+        request.session['json_list'] = []
         request.session['input_text'] = request.POST['input_text']
         input_text = request.POST['input_text']
         if (input_text == ""):
@@ -49,6 +51,7 @@ def optimize(request):
 def get_search_results(request):
     if (request.method == 'POST'):
         request.session['input_text'] = request.POST['input_text']
+        request.session['json_list'] = []
         input_text = request.POST['input_text']
         if (input_text == ""):
             JsonResponse({'error': 'empty input'})
