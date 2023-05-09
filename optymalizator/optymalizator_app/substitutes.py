@@ -37,17 +37,23 @@ def active_ingr_to_dose(drug):
 def in_range(drug_amount, sub_amount):
     return drug_amount <= sub_amount and drug_amount * 1.1 >= sub_amount
 
-def compare_amount(drug, sub):
+def compare_active_ingr_amount(drug, sub):
     if drug[1] == sub[1]:
-        return in_range(float(drug[0]), float(sub[0]))
+        return float(drug[0]) == float(sub[0])
     else:
         if drug[1][-1] == 'g' and sub[1][-1] == 'g':
-            return in_range(float(drug[0]) * unit_scale[drug[1]], float(sub[0]) * unit_scale[sub[1]])
+            (float(drug[0]) * unit_scale[drug[1]]) == (float(sub[0]) * unit_scale[sub[1]])
     return False
 
+def get_amount(amount):
+    return int(amount.split(' ')[0])
+
 def find_substitutes(drug):
+    if drug == None:
+        return []
     units = int(drug.zawartosc_opakowania.split(' ')[0])
     drug_ingrs = active_ingr_to_dose(drug)
+    drug_amount = get_amount(drug.zawartosc_opakowania)
 
     substitutes = []
     for substitute in LekRefundowany.objects.all().filter(postac=drug.postac).exclude(pk=drug.pk):
@@ -57,8 +63,11 @@ def find_substitutes(drug):
         for ingr in drug_ingrs.keys():
             if ingr not in sub_ingrs.keys():
                 break
-            elif not compare_amount(drug_ingrs[ingr], sub_ingrs[ingr]):
+            elif not compare_active_ingr_amount(drug_ingrs[ingr], sub_ingrs[ingr]):
+                break
+            elif not in_range(drug_amount, get_amount(substitute.zawartosc_opakowania)):
                 break
             else:
                 substitutes.append(substitute)
+            
     return sorted(substitutes, key=lambda x: (x.wysokosc_doplaty, x.nazwa))

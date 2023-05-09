@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .wyszukiwarka import read
 
 from .substitutes import find_substitutes
+from .models import LekRefundowany
 
 # TODO: poprawić modele (Kuba)
 
@@ -25,10 +26,10 @@ def search(request):
     return home(request)
 
 def optimize(request):
+    selected = None
     if request.method == 'POST':
         selected = request.POST['selected']
-        substitutes = find_substitutes(selected)
-        context = { "drugs" :  substitutes }
-    else:
-        context = { "drugs" : [] }
+    else: #DEBUG
+        selected = LekRefundowany.objects.all().get(pk=420)
+    context = { "drugs" : find_substitutes(selected) }
     return render(request, 'optimize/optimize.html', context)
