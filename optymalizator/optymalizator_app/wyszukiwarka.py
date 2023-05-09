@@ -1,5 +1,3 @@
-import pandas as pd
-import re
 import json
 
 from optymalizator_app.helper import *
@@ -12,7 +10,6 @@ def write(filter_res):
     df_res = df_xlsx.copy() # deep copy
 
     for key, value in filter_res.items():
-        # print(type(value))
         if (key == "ean"):
             value = [int(value)]
             df_res = df_res[df_xlsx[key].isin(value)]
@@ -27,19 +24,14 @@ def write(filter_res):
     data = [list(d.values()) for d in json_dict['data']]
     output_dict = {field: [d[i] for d in data] for i, field in enumerate(fields)}
     new_dict = {k: v for k, v in output_dict.items()}
-    # print(new_dict)
     res_list = return_list(new_dict)
-    # print("RESULT:")
-    # print(res_list)
     return res_list
 
 
 def read(input):
     filter_res = {}
     input = convert_to_db_shorcut(input)
-    # print(input)
     split_input = input.split(" ")
-    # print(split_input)
 
     # Extracting and cutting ean if one exists.
     ean_res = read_and_cut_ean(split_input)
@@ -56,8 +48,6 @@ def read(input):
     name = name_res[1]
     if (name != ""):
         filter_res.update({"nazwa": name})
-        # print("nazwa: ")
-        # print(name)
 
     substance_res = read_and_cut(split_input, all_substances)
     split_input = substance_res[0]
@@ -65,8 +55,6 @@ def read(input):
     substance = substance_res[1]
     if (substance != ""):
         filter_res.update({"substancja_czynna": substance})
-        print("substancja_czynna: ")
-        print(substance)
 
     if (name == "" and substance == "" and ean == ""):
         return None  # TODO return error
@@ -78,9 +66,6 @@ def read(input):
     split_input = input.split(" ")
     if (dose != ""):
         dose = one_space_between_number_and_word(dose)
-        # filter_res.update({"dawka": dose})
-        # print("dawka: ")
-        # print(dose)
 
     # Extracting content if it exists.
     content_res = return_and_cut_number_and_szt(input)
@@ -90,8 +75,6 @@ def read(input):
     if (content != ""):
         content = one_space_between_number_and_word(content)
         filter_res.update({"zawartosc_opakowania": content})
-        # print("zawartosc: ")
-        # print(content)
 
     # Extracting form if it exists.
     form_res = return_first_number_and_abbv(input)
@@ -102,8 +85,6 @@ def read(input):
         form.strip()
         print(form)
         filter_res.update({"postac": form})
-        # print("postac: ")
-        # print(form)
     if (content == ""):
         if (any(char.isdigit() for char in form)):
             value_temp = filter_res["postac"]
@@ -121,17 +102,6 @@ def read(input):
             filter_res.update({"postac": abbv_item})
             break
     if (input != "" and not input.isspace()):
-        # print("ERROR")
         return None
     
-    # print("FILTER_RES:")
-    # print(filter_res)
     return write(filter_res)
-
-
-# input = "Acidum valproicum + Natrii valproas"
-# input = "Acidum valproicum + Natrii valproas"
-# input = "Acarbosum"
-
-# print("RESULT: ")
-# print(read(input))
