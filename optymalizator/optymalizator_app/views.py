@@ -61,5 +61,9 @@ def optimize(request):
 def get_optimize_results(request):
     if (request.method == 'POST'):
         request.session["selected"] = request.POST["selected"]
+        selected_lek = LekRefundowany.objects.get(pk=request.POST["selected"])
+        selected_licznik = LicznikWyszukan.objects.get(ean=selected_lek.ean)
+        selected_licznik.ctr += 1
+        selected_licznik.save()
         return JsonResponse({'success': 'true'})
     return JsonResponse({'success': 'false'})

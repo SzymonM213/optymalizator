@@ -2,6 +2,7 @@ import json
 
 from optymalizator_app.helper import *
 from optymalizator_app.data_import import *
+from .models import LicznikWyszukan
 
 
 def write(filter_res):
@@ -25,6 +26,7 @@ def write(filter_res):
     output_dict = {field: [d[i] for d in data] for i, field in enumerate(fields)}
     new_dict = {k: v for k, v in output_dict.items()}
     res_list = return_list(new_dict)
+    res_list = sorted(res_list, key=lambda x: LicznikWyszukan.objects.get(ean=x['ean']).ctr, reverse=True)
     return res_list
 
 
