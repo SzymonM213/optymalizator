@@ -17,7 +17,10 @@
   <div class="container">
     <h1>Znalezione odpowiedniki</h1>
     <ul>
-      {% for drug in drugs %} <!-- bierzemy dragi xddd -->
+      {% if not json_list %}
+        <h1 align="center">Nie znaleziono odpowiedników</h1>
+      {% endif %}
+      {% for drug in drugs %}
       <li class="card" data-id="{{drug.pk}}">
         <p class="ean">EAN: 0{{drug.ean}}</p>
         <div class="main-content">

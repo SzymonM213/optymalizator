@@ -26,6 +26,9 @@
     </div>
 
     <ul class="drug-list">
+      {% if not json_list %}
+        <h1 align="center">Nie znaleziono leków</h1>
+      {% endif %}
       {% for drug in json_list %}
       <li class="card" id="{{drug.id}}" onclick="send_request({{drug.id}})">
         <p class="ean">EAN: {{drug.ean}}</p>
