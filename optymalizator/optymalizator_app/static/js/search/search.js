@@ -26,6 +26,7 @@ $(document).ready(function() {
     }
   });
 
+  searchBoxRight = document.querySelector('.search-box-right');
   search = document.getElementById("search");
   function submitSearch() {
     if (search.value == "") return;
@@ -64,4 +65,23 @@ $(document).ready(function() {
     e.preventDefault();
     submitSearch();
   });
+
+  if (search.value == "") {
+    searchBoxRight.classList.remove('active');
+  } else {
+    searchBoxRight.classList.add('active');
+  }
+
+  search.addEventListener('input', function () {
+    if (search.value == "") {
+      searchBoxRight.classList.remove('active');
+    } else {
+      searchBoxRight.classList.add('active');
+    }
+  })
+
+  searchBoxRight.addEventListener('click', function () {
+    if (searchBoxRight.classList.contains('active'))
+      submitSearch();
+  })
 });

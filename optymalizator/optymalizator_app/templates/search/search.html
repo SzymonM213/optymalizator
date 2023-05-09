@@ -15,14 +15,13 @@
 
 <body>
   <div class="container">
-    <!-- Search bar like in google at first filled with {{input_text}} -->
     <div class="search-container">
       <h1>Optymalizator</h1>
       <div class="search-box">
         <form action="" class="search-form">
-          {% csrf_token %}
           <input type="text" placeholder="Wyszukaj" id="search" value="{{input_text}}" autocomplete="off">
         </form>
+        <i class="fas fa-arrow-right search-box-right"></i>
       </div>
     </div>
 
