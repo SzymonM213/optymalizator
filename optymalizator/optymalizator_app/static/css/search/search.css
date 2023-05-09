@@ -73,6 +73,10 @@ body {
   right: 0;
 }
 
+.card:hover {
+  background-color: #cfcece;
+}
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
