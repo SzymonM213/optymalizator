@@ -1,31 +1,40 @@
 import pandas as pd
 
-df_xlsx = pd.read_excel('leki.xlsx')
+import os.path
+
+from .models import LekRefundowany
+
+query_set = LekRefundowany.objects.all()
+data = list(query_set.values())
+df_xlsx = pd.DataFrame(data)
+
+# full_path = os.path.abspath('optymalizator_app/leki.xlsx')
+# df_xlsx = pd.read_excel(full_path)
 
 columns = df_xlsx.columns
 
-all_substances = df_xlsx['Substancja czynna'].unique()
+all_substances = df_xlsx['substancja_czynna'].unique()
 all_substances = [subst.lower() for subst in all_substances]
 
 
-all_names = df_xlsx['Nazwa  postać i dawka'].str.split(', ', expand=True)[0].unique()
+all_names = df_xlsx['nazwa'].unique()
 all_names = [name.lower() for name in all_names]
 
-values_to_corresponding_columns = {
-    'ean': 'Numer GTIN lub inny kod jednoznacznie identyfikujący produkt',
-    'name': 'Nazwa  postać i dawka',
-    'form': 'Nazwa  postać i dawka',
-    'dose': 'Nazwa  postać i dawka',
-    'substance': 'Substancja czynna',
-    'content': 'Zawartość opakowania',
-}
+# values_to_corresponding_columns = {
+#     'ean': 'Numer GTIN lub inny kod jednoznacznie identyfikujący produkt',
+#     'name': 'Nazwa  postać i dawka',
+#     'form': 'Nazwa  postać i dawka',
+#     'dose': 'Nazwa  postać i dawka',
+#     'substance': 'Substancja czynna',
+#     'content': 'Zawartość opakowania',
+# }
 
-http_and_columns = {
-    'Substancja czynna': 'substancja_czynna',
-    'Nazwa  postać i dawka': 'nazwa_postac_dawka',
-    'Zawartość opakowania': 'zawartosc',
-    'Numer GTIN lub inny kod jednoznacznie identyfikujący produkt': 'ean',
-}
+# http_and_columns = {
+#     'Substancja czynna': 'substancja_czynna',
+#     'Nazwa  postać i dawka': 'nazwa_postac_dawka',
+#     'Zawartość opakowania': 'zawartosc',
+#     'Numer GTIN lub inny kod jednoznacznie identyfikujący produkt': 'ean',
+# }
 
 
 # Returned columns: +"ean": "String",

@@ -8,6 +8,8 @@ abbv_map = {
     "kaps.": ["kapsułki", "kaps.", "kapsułka", "kapsułek", "kapsulki, kapsulka, kapsulek"],
 }
 
+abbv_list = ["tabletki", "tabletka", "tabletek", "tab.", "tabl.", "kapsułki", "kaps.", "kapsułka", "kapsułek", "kapsulki, kapsulka, kapsulek"]
+
 unit_list = ['mg', 'g']
 
 szt = ["szt."]
@@ -44,7 +46,7 @@ def read_and_cut(split_input, all_phrases):
 
 # Checks if input consists a valid ean. If it does, it cuts the sequence from the input and list [input, ean] is returned.
 def read_and_cut_ean(split_input):
-    regex = r'^\d{8,14}$'
+    regex = r'^(\d{8,14})$'
     for i in range(len(split_input)):
         match = re.search(regex, split_input[i])
         if (match):

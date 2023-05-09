@@ -28,7 +28,9 @@ $(document).ready(function () {
       type: 'POST',
       url: 'search/',
       data: data,
-      success: function (data) { location.reload(); },
+      success: function (data) {
+        location.href = 'search/';
+      },
     });
   }
 

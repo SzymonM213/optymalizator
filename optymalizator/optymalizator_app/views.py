@@ -1,20 +1,42 @@
 from django.shortcuts import render
 
-# TODO: create database model (Kuba)
+from .wyszukiwarka import read
+
+from .substitutes import find_substitutes
+from .models import LekRefundowany
+
+# TODO: poprawić modele (Kuba)
 
 def home(request):
     return render(request, 'home/home.html')
 
 def search(request):
-    if request.method == 'POST':
+    if (request.method == 'POST'):
+        request.session['json_list'] = None
         input_text = request.POST['input_text']
-        print(input_text)
-        # TODO: parse input_text into json (Antek)
-    return home(request) # TODO: return search results (Mikołaj)
+        if (input_text == ""):
+            return home(request)
+        json_list = read(input_text)
+        if (json_list == None):
+            return home(request)
+        context = {
+            'json_list': json_list
+        }
+        request.session['json_list'] = json_list
+        return render(request, 'search/search.html', context)  # TODO: ui do wyników wyszukiwania (Mikołaj)
+
+    json_list = request.session.get('json_list')
+    context = {
+        'json_list': json_list
+    }
+    return render(request, 'search/search.html', context)
 
 def optimize(request):
+    selected = None
     if request.method == 'POST':
-        selected = request.POST['selected']
-        print(selected)
-        # TODO: parse selected into json (Szymon)
-    return render(request, 'optimize/optimize.html') # TODO: return optimize results - ui zrobione, ale trzeba jeszcze sparsować kontekst do htmla (Staszek)
+        # selected = request.POST['selected']
+        selected = LekRefundowany.objects.all().get(pk=request.POST['selected'])
+    else: #DEBUG
+        selected = LekRefundowany.objects.all().get(pk=420)
+    context = { "drugs" : find_substitutes(selected) }
+    return render(request, 'optimize/optimize.html', context)
