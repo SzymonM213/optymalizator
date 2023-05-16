@@ -1,0 +1,10 @@
+asgiref
+Django
+numpy
+pandas
+psycopg2
+python-dateutil
+pytz
+six
+sqlparse
+tzdata
