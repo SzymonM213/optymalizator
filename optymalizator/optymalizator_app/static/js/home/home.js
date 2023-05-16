@@ -18,20 +18,14 @@ $(document).ready(function () {
   })
 
   function submitSearch() {
-    if (search.value == "") return;
+    if (!search.value.trim()) return;
 
     const data = {
-      'input_text': search.value,
+      'q': search.value,
     };
-
-    $.ajax({
-      type: 'POST',
-      url: 'search/',
-      data: data,
-      success: function (data) {
-        location.href = 'search/';
-      },
-    });
+    
+    const params = new URLSearchParams(data);
+    window.location.href = '/search?' + params.toString();
   }
 
   searchBoxRight.addEventListener('click', function () {
