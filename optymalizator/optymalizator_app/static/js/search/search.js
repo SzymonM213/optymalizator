@@ -5,6 +5,15 @@ $.ajaxSetup({
   }
 });
 
+function send_request(id) {
+  const data = {
+    'selected': id,
+  };
+
+  const params = new URLSearchParams(data);
+  window.location.href = '/optimize?' + params.toString();
+}
+
 $(document).ready(function() {
   topBtn = document.querySelector(".top-btn");
   backBtn = document.querySelector(".back-btn");

@@ -46,23 +46,6 @@
     </ul>
   </div>
 
-  <script>
-    function send_request(id) {
-      const data = {
-        'selected': id,
-      };
-
-      $.ajax({
-        type: 'POST',
-        url: '/get_optimize_results/',
-        data: data,
-        success: function (data) {
-          location.href = 'optimize/';
-        },
-      });
-    }
-  </script>
-
   <div class="top-btn">
     <i class="fas fa-arrow-up"></i>
   </div>

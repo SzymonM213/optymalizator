@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .wyszukiwarka import read
 
@@ -52,18 +52,11 @@ def get_search_results(request):
     
 
 def optimize(request):
-    selected = request.session["selected"]
-    selected = LekRefundowany.objects.all().get(pk=selected)
-    context = { "drugs" : find_substitutes(selected) }
+    if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
+
+    selected = request.GET.get('selected', None)
+    if selected == None: redirect('home')
+
+    drug = LekRefundowany.objects.get(id=selected)
+    context = { 'drugs': find_substitutes(drug) }
     return render(request, 'optimize/optimize.html', context)
-
-
-def get_optimize_results(request):
-    if (request.method == 'POST'):
-        request.session["selected"] = request.POST["selected"]
-        selected_lek = LekRefundowany.objects.get(pk=request.POST["selected"])
-        selected_licznik = LicznikWyszukan.objects.get(ean=selected_lek.ean)
-        selected_licznik.ctr += 1
-        selected_licznik.save()
-        return JsonResponse({'success': 'true'})
-    return JsonResponse({'success': 'false'})

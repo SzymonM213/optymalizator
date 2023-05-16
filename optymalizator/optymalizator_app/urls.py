@@ -1,11 +1,10 @@
 from django.urls import path
 
-from .views import home, search, optimize, get_search_results, get_optimize_results
+from . import views
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('search/', search, name='search'),
-    path('search/optimize/', optimize, name='optimize'),
-    path('get_search_results/', get_search_results, name='get_search_results'),
-    path('get_optimize_results/', get_optimize_results, name='get_optimize_results')
+    path('', views.home, name='home'),
+    path('search/', views.search, name='search'),
+    path('get_search_results/', views.get_search_results, name='get_search_results'),
+    path('optimize/', views.optimize, name='optimize'),
 ]
