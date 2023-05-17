@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .wyszukiwarka import read
 from django.db.models import F
 
-from .substitutes import find_substitutes
 from .models import LekRefundowany, LicznikWyszukan
 
+from .wyszukiwarka import read
+from .substitutes import find_substitutes
+
 def home(request):
-    request.session['json_list'] = []
+    request.session['drugs'] = []
     return render(request, 'home/home.html')
 
 def search(request):
@@ -16,11 +17,11 @@ def search(request):
     q = request.GET.get('q', '')
     if q == '': return redirect('home')
 
-    json_list = read(q)
+    drugs = read(q)
 
     context = {
-        'input_text': q if q != None else '',
-        'json_list': json_list if json_list != None else [],
+        'query': q if q != None else '',
+        'drugs': drugs,
     }
     return render(request, 'search/search.html', context)
 

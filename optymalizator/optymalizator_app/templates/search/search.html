@@ -19,17 +19,17 @@
       <h1>Optymalizator</h1>
       <div class="search-box">
         <form action="" class="search-form">
-          <input type="text" placeholder="Wyszukaj" id="search" value="{{input_text}}" autocomplete="off">
+          <input type="text" placeholder="Wyszukaj" id="search" value="{{query}}" autocomplete="off">
         </form>
         <i class="fas fa-arrow-right search-box-right"></i>
       </div>
     </div>
 
     <ul class="drug-list">
-      {% if not json_list %}
+      {% if not drugs %}
         <h1 align="center">Nie znaleziono leków</h1>
       {% endif %}
-      {% for drug in json_list %}
+      {% for drug in drugs %}
       <li class="card" id="{{drug.id}}" onclick="send_request({{drug.id}})">
         <p class="ean">EAN: {{drug.ean}}</p>
         <div class="main-content">
