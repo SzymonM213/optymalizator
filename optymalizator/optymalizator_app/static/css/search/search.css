@@ -13,6 +13,9 @@ body {
 .container {
   width: 80%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .search-container > h1 {
@@ -21,12 +24,18 @@ body {
   left: 0;
 }
 
+.container > ul {
+  width: 100%;
+  list-style: none;
+}
+
 .card {
   display: flex;
   flex-direction: column;
   background-color: #fff;
   border-radius: 10px;
   padding: 1rem;
+  width: calc(100% - 2rem);
   margin: 1rem 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: #000;
