@@ -211,3 +211,32 @@ body {
   transform: translateX(0%);
   color: #eee;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.pagination > a {
+  color: #eee;
+  font-size: 1.2rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin: 0 0.5rem;
+  background-color: #3a2e5c;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination > a.active {
+  color: #3a2e5c;
+  background-color: #ae8cd9
+}
+
+.pagination > a:hover {
+  color: #3a2e5c;
+  background-color: #ffeb99;
+  text-decoration: underline;
+}

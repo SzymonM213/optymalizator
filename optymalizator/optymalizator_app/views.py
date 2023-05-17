@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db.models import F
+from django.core.paginator import Paginator
 
 from .models import LekRefundowany, LicznikWyszukan
 
@@ -19,9 +20,12 @@ def search(request):
 
     drugs = read(q)
 
+    paginator = Paginator(drugs, 10)
+    page_number = request.GET.get('page', 1)
+
     context = {
         'query': q if q != None else '',
-        'drugs': drugs,
+        'drugs': paginator.get_page(page_number),
     }
     return render(request, 'search/search.html', context)
 

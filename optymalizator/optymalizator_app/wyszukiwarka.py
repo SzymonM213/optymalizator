@@ -7,7 +7,7 @@ from .models import LicznikWyszukan
 
 def write(filter_res):
     if filter_res == None:
-        return None
+        return []
     df_res = df_xlsx.copy() # deep copy
 
     for key, value in filter_res.items():
@@ -60,7 +60,7 @@ def read(input):
         filter_res.update({"substancja_czynna": substance})
 
     if (name == "" and substance == "" and ean == ""):
-        return None  # TODO return error
+        return []  # TODO return error
     
     # # Extracting and cutting dose if it exists.
     dose_res = return_and_cut_number_and_unit(input)
@@ -105,6 +105,6 @@ def read(input):
             filter_res.update({"postac": abbv_item})
             break
     if (input != "" and not input.isspace()):
-        return None
+        return []
     
     return write(filter_res)

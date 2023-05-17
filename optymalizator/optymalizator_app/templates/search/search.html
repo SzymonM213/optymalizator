@@ -44,6 +44,28 @@
       </li>
       {% endfor %}
     </ul>
+
+    {% if drugs.paginator.num_pages > 1 %}
+    <div class="pagination">
+      {% if drugs.has_previous %}
+        <a href="{% url 'search' %}?q={{query}}&page={{ drugs.previous_page_number }}">Poprzednia</a>
+      {% endif %}
+
+      {% load custom_filters %}
+      {% for page in drugs|elided_page_range %}
+        {% if page == drugs.number %}
+          <a href="{% url 'search' %}?q={{query}}&page={{page}}" class="active">{{page}}</a>
+        {% else %}
+          <a href="{% url 'search' %}?q={{query}}&page={{page}}">{{page}}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if drugs.has_next %}
+        <a href="{% url 'search' %}?q={{query}}&page={{ drugs.next_page_number }}">Następna</a>
+      {% endif %}
+    </div>
+    {% endif %}
+
   </div>
 
   <div class="top-btn">
