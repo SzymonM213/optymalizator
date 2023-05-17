@@ -219,11 +219,11 @@ body {
   margin: 1rem 0;
 }
 
-.pagination > a {
+.pagination > a, .pagination > span {
   color: #eee;
   font-size: 1.2rem;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.7rem;
   border-radius: 5px;
   margin: 0 0.5rem;
   background-color: #3a2e5c;

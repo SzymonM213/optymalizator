@@ -21,7 +21,7 @@ def search(request):
     drugs = read(q)
 
     paginator = Paginator(drugs, 10)
-    page_number = request.GET.get('page', 1)
+    page_number = min(max(int(request.GET.get('page', 1)), 1), paginator.num_pages)
 
     context = {
         'query': q if q != None else '',
