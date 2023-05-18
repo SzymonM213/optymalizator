@@ -18,10 +18,14 @@ body {
   align-items: center;
 }
 
-.search-container > h1 {
+.search-container .logo {
   font-size: 2.42rem;
   position: absolute;
   left: 0;
+  text-decoration: none;
+  color: #eee;
+  font-weight: 900;
+  letter-spacing: -0.07em;
 }
 
 .container > ul {
