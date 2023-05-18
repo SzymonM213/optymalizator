@@ -2,11 +2,10 @@ import json
 
 from optymalizator_app.helper import *
 from optymalizator_app.data_import import *
-from .models import LicznikWyszukan
 
 
 def write(filter_res):
-    if filter_res == None:
+    if filter_res == []:
         return []
     df_res = df_xlsx.copy() # deep copy
 
@@ -18,7 +17,6 @@ def write(filter_res):
             df_res = df_res[df_xlsx[key].str.lower().str.contains(value.replace('+', '\+'))]
 
     df_res = df_res.iloc[:, 0:8]
-    df_res = df_res.drop_duplicates(subset=['ean'])
     json_str = df_res.to_json(orient='table', index=False)
     json_dict = json.loads(json_str)
 
@@ -27,7 +25,6 @@ def write(filter_res):
     output_dict = {field: [d[i] for d in data] for i, field in enumerate(fields)}
     new_dict = {k: v for k, v in output_dict.items()}
     res_list = return_list(new_dict)
-    res_list = sorted(res_list, key=lambda x: (LicznikWyszukan.objects.get(ean=x['ean']).ctr * (-1), x['nazwa']), reverse=False)
     return res_list
 
 
@@ -59,8 +56,9 @@ def read(input):
     if (substance != ""):
         filter_res.update({"substancja_czynna": substance})
 
+
     if (name == "" and substance == "" and ean == ""):
-        return []  # TODO return error
+        return []
     
     # # Extracting and cutting dose if it exists.
     dose_res = return_and_cut_number_and_unit(input)
@@ -86,7 +84,6 @@ def read(input):
     if (form != ""):
         form = one_space_between_number_and_word(form)
         form.strip()
-        print(form)
         filter_res.update({"postac": form})
     if (content == ""):
         if (any(char.isdigit() for char in form)):
@@ -104,7 +101,12 @@ def read(input):
                     break
             filter_res.update({"postac": abbv_item})
             break
+    
     if (input != "" and not input.isspace()):
         return []
     
     return write(filter_res)
+
+
+input = "Levetiracetamum"
+print(read(input))

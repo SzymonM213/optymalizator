@@ -16,6 +16,9 @@ def search(request):
     if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
 
     q = request.GET.get('q', '')
+    print("_______q________")
+    print(q)
+    print(q == '')
     if q == '': return redirect('home')
 
     drugs = read(q)
