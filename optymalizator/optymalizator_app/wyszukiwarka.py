@@ -106,7 +106,3 @@ def read(input):
         return []
     
     return write(filter_res)
-
-
-input = "Levetiracetamum"
-print(read(input))
