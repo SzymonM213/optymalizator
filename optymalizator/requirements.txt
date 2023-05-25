@@ -8,3 +8,5 @@ pytz
 six
 sqlparse
 tzdata
+sqlalchemy
+unicode
