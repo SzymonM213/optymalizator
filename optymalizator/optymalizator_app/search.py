@@ -83,8 +83,6 @@ def parse_dawka(tokens, results):
         unit = re.search(runit, token).group(0)
         conditions.append(Q(dawka__icontains=number + ' ' + unit))
 
-    print(dawka, conditions)
-
     if len(conditions) > 0: results = results.filter(reduce(and_, conditions))
 
     return tokens, results
@@ -92,8 +90,16 @@ def parse_dawka(tokens, results):
 def parse_zawartosc_opakowania(tokens, results):
     rnum = r'\d+'
     rszt = r'szt(\.|uk[ai]?)?'
+    rfiol = r'fiol(\.|k[ai]|ek)?'
+    ramp = r'amp(\.|ułk[ai]|ułek)?'
+    rtabl = r'tabl(\.|etk[ai]|etek)?'
+    rkaps = r'kaps(\.|ułk[ai]|ułek)?'
+    rsasz = r'sasz(\.|etk[ai]|etek)?'
 
-    rzaw = r'({})\s*({})'.format(rnum, rszt)
+    # take or of all units
+    runit = r'({})'.format('|'.join([rszt, rfiol, ramp, rtabl, rkaps, rsasz]))
+    
+    rzaw = r'({})\s*({})'.format(rnum, runit)
 
     zaw = set(filter(lambda token: re.fullmatch(rzaw, token), tokens))
     tokens = list(filter(lambda token: not re.fullmatch(rzaw, token), tokens))
@@ -111,8 +117,16 @@ def parse_zawartosc_opakowania(tokens, results):
     conditions = []
     for token in zaw:
         number = re.search(rnum, token).group(0)
-        unit = re.search(rszt, token).group(0)
-        conditions.append(Q(zawartosc_opakowania__icontains=number + ' ' + unit))
+        unit = re.search(runit, token).group(0)
+        regex = number + r'\s*'
+        if re.fullmatch(rszt, unit): regex += rszt
+        if re.fullmatch(rfiol, unit): regex += rfiol
+        if re.fullmatch(ramp, unit): regex += ramp
+        if re.fullmatch(rtabl, unit): regex += rtabl
+        if re.fullmatch(rkaps, unit): regex += rkaps
+        if re.fullmatch(rsasz, unit): regex += rsasz
+        conditions.append(Q(zawartosc_opakowania__regex=regex))
+        # TODO: może to zmienić żeby numer nie musiał być zmatchowany dokładnie? ale to bez sensu w sumie, dokumentacja jest słaba i tyle
 
     if len(conditions) > 0: results = results.filter(reduce(and_, conditions))
 
@@ -124,13 +138,13 @@ def find_search_results(query):
     tokens, results = parse_ean(tokens, results)
     if results.count() == 0: return []
 
+    tokens, results = parse_zawartosc_opakowania(tokens, results)
+    if results.count() == 0: return []
+
     tokens, results = parse_postac(tokens, results)
     if results.count() == 0: return []
 
     tokens, results = parse_dawka(tokens, results)
-    if results.count() == 0: return []
-
-    tokens, results = parse_zawartosc_opakowania(tokens, results)
     if results.count() == 0: return []
 
     for token in tokens:
@@ -147,7 +161,7 @@ def find_search_results(query):
         F('nazwa').asc(nulls_last=True),
     )
 
-    return [ { 
+    res = [ { 
         'id': result.id,
         'ean': result.ean,
         'nazwa': result.nazwa,
@@ -155,3 +169,8 @@ def find_search_results(query):
         'zawartosc_opakowania': result.zawartosc_opakowania,
         'substancja_czynna': result.substancja_czynna,
         'dawka': result.dawka, } for result in results ]
+
+    ctrs = { ctr.ean: ctr.ctr for ctr in LicznikWyszukan.objects.filter(ean__in=[r['ean'] for r in res]) }
+    res.sort(key=lambda r: ctrs[r['ean']], reverse=True)
+
+    return res
