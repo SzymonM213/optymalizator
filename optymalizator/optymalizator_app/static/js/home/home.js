@@ -37,4 +37,9 @@ $(document).ready(function () {
     e.preventDefault();
     submitSearch();
   });
+
+  $('.help').click(function () {
+    console.log('help');
+    // TODO: download help file
+  });
 });
