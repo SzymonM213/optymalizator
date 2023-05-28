@@ -41,3 +41,8 @@ def optimize(request):
     LicznikWyszukan.objects.filter(ean=drug.ean).update(ctr=F('ctr')+1)
     context = { 'drugs': find_substitutes(drug) }
     return render(request, 'optimize/optimize.html', context)
+
+def clear(request):
+    if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
+    LicznikWyszukan.objects.all().update(ctr=0)
+    return redirect('home')
