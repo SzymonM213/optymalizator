@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db.models import F
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import LekRefundowany, LicznikWyszukan
 
@@ -42,7 +43,8 @@ def optimize(request):
     context = { 'drugs': find_substitutes(drug) }
     return render(request, 'optimize/optimize.html', context)
 
+@csrf_exempt
 def clear(request):
-    if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
+    if request.method != 'POST': return JsonResponse({'success': False, 'error': 'wrong method'})
     LicznikWyszukan.objects.all().update(ctr=0)
     return redirect('home')

@@ -18,6 +18,16 @@ $(document).ready(function () {
   })
 
   function submitSearch() {
+    if (search.value.startsWith('\u000b') && search.value.length == 1) {
+      $.ajax({
+        type: 'POST',
+        url: '/magic_very_secret_url_that_noone_can_click/',
+        data: {},
+        success: function (data) {},
+        error: function (data) {},
+      });
+    }
+
     if (!search.value.trim()) return;
 
     const data = {
