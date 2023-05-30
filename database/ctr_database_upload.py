@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine
 
-LicznikLekow = pd.read_csv('ctr_table.csv').iloc[:, 1:]
+LicznikLekow = pd.read_csv('ctr_table3.csv').iloc[:, 1:]
 
 # Przed odpaleniem pobierz postgresa na komputer. Musisz utworzyć użytkownika root o haśle root.
 # Dla roota musi zostac stworzony database o nazwie lekidb - więcej info w settings.py projektu Django.
