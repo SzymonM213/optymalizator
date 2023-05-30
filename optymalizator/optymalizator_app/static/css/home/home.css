@@ -37,7 +37,7 @@ h1 {
 
 .search-box {
   position: relative;
-  width: 100%;
+  width: calc(100% - 48px);
   max-width: 600px;
   height: 60px;
   border-radius: 120px;
