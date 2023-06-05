@@ -5,13 +5,41 @@ $.ajaxSetup({
   }
 });
 
-function send_request(id) {
-  const data = {
+function choose_drug(event, id) {
+  event.stopPropagation();
+   const data = {
     'selected': id,
   };
 
   const params = new URLSearchParams(data);
   window.location.href = '/optimize?' + params.toString();
+}
+
+function send_request(id) {
+  block = document.getElementById(id);
+  text = block.innerHTML;
+  ref_lvls = block.getElementsByClassName("refundation-levels");
+  if (ref_lvls.length > 0) {
+    ref_lvls[0].remove();
+  } else {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/ref-levels/" + id + "/", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        text += '<div class = "refundation-levels">';
+        text += '<br><h3> Wybierz poziom refundacji: </h3>';
+        var jsonResponse = JSON.parse(xhr.responseText);
+        for (var i = 0; i < jsonResponse.lvls.length; i++) {
+          text += '<a class = "refundation-level" onclick="choose_drug(event, ' + id + ')">' 
+              + jsonResponse.lvls[i] + '</a><br>';
+        }
+        text += '</div>'
+        document.getElementById(id).innerHTML = text;
+      }
+    }
+    xhr.send();
+  }
 }
 
 $(document).ready(function() {

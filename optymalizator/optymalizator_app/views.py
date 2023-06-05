@@ -4,7 +4,7 @@ from django.db.models import F
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import LekRefundowany, LicznikWyszukan
+from .models import LekRefundowany, LicznikWyszukan, DaneLeku
 
 from .wyszukiwarka import read
 from .substitutes import find_substitutes
@@ -48,3 +48,12 @@ def clear(request):
     if request.method != 'POST': return JsonResponse({'success': False, 'error': 'wrong method'})
     LicznikWyszukan.objects.all().update(ctr=0)
     return redirect('home')
+
+def ref_levels(request, drug_id):
+    drug = LekRefundowany.objects.get(pk=drug_id)
+    ean = drug.ean
+    lvls_set = DaneLeku.objects.filter(ean=ean).values('poziom_odplatnosci').order_by('poziom_odplatnosci')
+    lvls_list = [d['poziom_odplatnosci'] for d in lvls_set]
+    lvls = list(dict.fromkeys(lvls_list))
+    return JsonResponse({'lvls': lvls})
+
