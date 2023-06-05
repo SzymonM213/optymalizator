@@ -255,3 +255,62 @@ body {
   background-color: #ffeb99;
   text-decoration: underline;
 }
+
+#ref-levels-dialog {
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: lightblue;
+  width: 30%;
+  height: 30%;
+  z-index: 100;
+  border-radius: 10px;
+  border: 1px solid #000;
+}
+
+#ref-levels {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: #eee;
+  color: #000;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px #eee;
+}
+
+#ref-levels-dialog p {
+  margin: 1rem;
+  font-size: 1.3rem;
+  padding: 0.5rem;
+}
+
+#ref-levels-dialog div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#ref-levels-dialog button {
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #3a2e5c;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  width: 10rem;
+  padding: 0.2rem;
+  margin: 0.5rem;
+  text-align: center;
+}
+
+#ref-levels-dialog button:hover {
+  background-color: rgb(165 132 209);
+}
