@@ -7,9 +7,10 @@ class LekRefundowany(models.Model):
     postac = models.TextField(default="", null=False)
     dawka = models.TextField(default="", null=False)    
     zawartosc_opakowania = models.TextField(default="", null=False)
-    ean = models.BigIntegerField(null=False)
+    ean = models.BigIntegerField(null=False, unique=True)
 
 class DaneLeku(models.Model):
+    ean = models.BigIntegerField(null=False)
     grupa_limitowana = models.TextField(default="", null=False)
     cena_hurtowa = models.IntegerField(default=0, null=False)
     cena_detaliczna = models.IntegerField(default=0, null=False)
