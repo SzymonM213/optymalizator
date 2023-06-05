@@ -47,6 +47,22 @@
       {% endfor %}
     </ul>
 
+    <dialog id="ref-levels-dialog">
+      <form>
+        <p>
+          <label>Poziom refundacji:
+            <select name="ref-levels" id="ref-levels">
+              <!-- fill with js -->
+            </select>
+          </label>
+        </p>
+        <div>
+          <button value="cancel" formmethod="dialog">Anuluj</button>
+          <button class="confirm-btn">Zatwierdź</button>
+        </div>
+      </form>
+    </dialog>
+
     {% if drugs.has_other_pages %}
     <div class="pagination">
       {% if drugs.has_previous %}

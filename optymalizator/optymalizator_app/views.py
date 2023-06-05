@@ -34,13 +34,15 @@ def search(request):
 def optimize(request):
     if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
 
-    selected = request.GET.get('selected', None)
+    id = request.GET.get('id', None)
+    lvl = request.GET.get('lvl', None)
+    print(id, lvl)
 
-    try: drug = LekRefundowany.objects.get(pk=selected)
+    try: drug = LekRefundowany.objects.get(pk=id)
     except: return redirect('home')
 
     LicznikWyszukan.objects.filter(ean=drug.ean).update(ctr=F('ctr')+1)
-    context = { 'drugs': find_substitutes(drug) }
+    context = { 'drugs': [] } # TODO: find_substitutes(drug)
     return render(request, 'optimize/optimize.html', context)
 
 @csrf_exempt
@@ -49,11 +51,15 @@ def clear(request):
     LicznikWyszukan.objects.all().update(ctr=0)
     return redirect('home')
 
-def ref_levels(request, drug_id):
+def ref_levels(request):
+    if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
+
+    drug_id = request.GET.get('id', None)
+    if drug_id == None: return JsonResponse({'success': False, 'error': 'no drug_id'})
     drug = LekRefundowany.objects.get(pk=drug_id)
+    if drug == None: return JsonResponse({'success': False, 'error': 'no drug'})
     ean = drug.ean
     lvls_set = DaneLeku.objects.filter(ean=ean).values('poziom_odplatnosci').order_by('poziom_odplatnosci')
     lvls_list = [d['poziom_odplatnosci'] for d in lvls_set]
     lvls = list(dict.fromkeys(lvls_list))
     return JsonResponse({'lvls': lvls})
-
