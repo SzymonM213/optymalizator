@@ -1,7 +1,7 @@
 from django.db import models
 
 class LekRefundowany(models.Model):
-    lp = models.IntegerField(default=0, unique=True, null=False)
+    lp = models.IntegerField(default=0, null=False)
     substancja_czynna = models.TextField(default="", null=False)
     nazwa = models.TextField(default="", null=False)
     postac = models.TextField(default="", null=False)
@@ -13,8 +13,10 @@ class LekRefundowany(models.Model):
     cena_detaliczna = models.IntegerField(default=0, null=False)
     wysokosc_limitu = models.IntegerField(default=0, null=False)
     zakres_wskazan = models.TextField(default="", null=False)
+    zakres_wskazan_pozarejestracyjnych = models.TextField(default="", null=False)
     poziom_odplatnosci = models.CharField(max_length=32, default="", null=False)   
     wysokosc_doplaty = models.IntegerField(default = 0, null=False) 
+    data_rozporzadzenia = models.DateField(null=False)
 
     def cena(self):
         result = str(self.wysokosc_doplaty)
