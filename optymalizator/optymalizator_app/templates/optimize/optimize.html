@@ -18,8 +18,34 @@
 <body>
   <div class="container">
     <h1>Znalezione odpowiedniki</h1>
-    <!-- TODO: dodać nazwę leku, zakres wskazań i jego cenę -->
-    <!-- TODO: dodać wybór rozporządzenia -->
+    <div class="options">
+      <div>
+        <h2>Poziom refundacji:</h2>
+        <div class="dropdown">
+          {% for lvl in ref_levels %}
+          <input id="radio-{{lvl}}" type="radio" name="ref_level" value="{{lvl}}" {% if lvl == request.GET.lvl %} checked {% endif %}>
+          <label for="radio-{{lvl}}">{{lvl}}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <h2>Rozporządzenie:</h2>
+        {% for ord in ordinances %}
+        <input id="radio-{{ord}}" type="radio" name="ordinance" value="{{ord}}"
+        {% if not request.GET.ord and forloop.first %}
+          checked
+        {% elif request.GET.ord == ord %}
+          checked
+        {% endif %}>
+        <label for="radio-{{ord}}">{{ord}}</label>
+        {% endfor %}
+      </div>
+      <div class="confirm-btn">
+        <button type="button">Zatwierdź</button>
+      </div>
+    </div>
+
     {% if not drugs %}
       <h1 align="center">Nie znaleziono odpowiedników</h1>
     {% else %}

@@ -29,4 +29,26 @@ $(document).ready(function() {
   backBtn.addEventListener("click", () => {
     window.history.back();
   });
+
+});
+
+// z jakiegoś powodu jquery nie działa
+confirm_btn = document.querySelector(".confirm-btn");
+confirm_btn.addEventListener("click", () => {
+  let data = {
+    'id': new URLSearchParams(window.location.search).get('id'),
+    'lvl': '',
+    'ord': '',
+  };
+
+  document.querySelectorAll("input:checked").forEach((item) => {
+    if (item.name == 'ref_level') {
+      data['lvl'] = item.value;
+    } else if (item.name == 'ordinance') {
+      data['ord'] = item.value;
+    }
+  });
+
+  const params = new URLSearchParams(data);
+  window.location.href = '/optimize?' + params.toString();
 });

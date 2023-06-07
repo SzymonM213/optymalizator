@@ -6,10 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import LekRefundowany, LicznikWyszukan, DaneLeku
 
-from .wyszukiwarka import read
-from .substitutes import find_substitutes
+# from .wyszukiwarka import read
+# from .substitutes import find_substitutes
 
 from .search import find_search_results
+from .optimize import find_substitutes, find_ref_levels, find_ordinances
 
 def home(request):
     return render(request, 'home/home.html')
@@ -36,13 +37,17 @@ def optimize(request):
 
     id = request.GET.get('id', None)
     lvl = request.GET.get('lvl', None)
-    print(id, lvl)
-
+    
     try: drug = LekRefundowany.objects.get(pk=id)
     except: return redirect('home')
 
     LicznikWyszukan.objects.filter(ean=drug.ean).update(ctr=F('ctr')+1)
-    context = { 'drugs': [] } # TODO: find_substitutes(drug)
+    context = {
+        'ref_levels': find_ref_levels(drug),
+        'drugs': find_substitutes(drug),
+        'ordinances': find_ordinances(drug, lvl),
+    }
+
     return render(request, 'optimize/optimize.html', context)
 
 @csrf_exempt
@@ -58,8 +63,5 @@ def ref_levels(request):
     if drug_id == None: return JsonResponse({'success': False, 'error': 'no drug_id'})
     drug = LekRefundowany.objects.get(pk=drug_id)
     if drug == None: return JsonResponse({'success': False, 'error': 'no drug'})
-    ean = drug.ean
-    lvls_set = DaneLeku.objects.filter(ean=ean).values('poziom_odplatnosci').order_by('poziom_odplatnosci')
-    lvls_list = [d['poziom_odplatnosci'] for d in lvls_set]
-    lvls = list(dict.fromkeys(lvls_list))
-    return JsonResponse({'lvls': lvls})
+
+    return JsonResponse({'lvls': find_ref_levels(drug)})
