@@ -1,4 +1,5 @@
 from .models import LekRefundowany, LicznikWyszukan
+import math
 import re
 
 units_pattern = r'µg\)?/dawkę inhalacyjną|µg\)?/dawkę odmierzoną|mg/\d ml|mg/ml|mg|µg|μg|g|ml|j.m.'
@@ -35,7 +36,14 @@ def active_ingr_to_dose(drug):
             result[ingredients[i]] = (get_number(doses[i]), get_unit(doses[i]))
 
 def in_range(drug_amount, sub_amount):
-    return drug_amount <= sub_amount and drug_amount * 1.1 >= sub_amount
+    item_number = 0
+    if drug_amount <= sub_amount and drug_amount * 1.1 >= sub_amount:
+        item_number = 1
+    else:
+        closest_amount = math.ceil(drug_amount / sub_amount) * sub_amount
+        if closest_amount * 1.1 <= drug_amount and closest_amount >= drug_amount:
+            item_number = closest_amount / sub_amount
+    return item_number
 
 def compare_active_ingr_amount(drug, sub):
     if drug[1] == sub[1]:
