@@ -44,4 +44,5 @@ def find_ordinances(drug, lvl):
                               .values('data_rozporzadzenia')\
                               .order_by(F('data_rozporzadzenia').desc())
     ord_list = [d['data_rozporzadzenia'] for d in ord_set]
+    ord_list = list(dict.fromkeys(ord_list))
     return map(lambda x: x.strftime('%Y-%m-%d'), ord_list)

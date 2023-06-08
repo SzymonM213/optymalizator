@@ -22,24 +22,22 @@
       <div>
         <h2>Poziom refundacji:</h2>
         <div class="dropdown">
-          {% for lvl in ref_levels %}
-          <input id="radio-{{lvl}}" type="radio" name="ref_level" value="{{lvl}}" {% if lvl == request.GET.lvl %} checked {% endif %}>
-          <label for="radio-{{lvl}}">{{lvl}}
-          </label>
-          {% endfor %}
+          <select id="dropdown" name="ref_level">
+            {% for lvl in ref_levels %}
+            <option value="{{lvl}}" {% if lvl == request.GET.lvl %} selected {% endif %}>{{lvl}}</option>
+            {% endfor %}
+          </select>
         </div>
       </div>
       <div>
         <h2>Rozporządzenie:</h2>
-        {% for ord in ordinances %}
-        <input id="radio-{{ord}}" type="radio" name="ordinance" value="{{ord}}"
-        {% if not request.GET.ord and forloop.first %}
-          checked
-        {% elif request.GET.ord == ord %}
-          checked
-        {% endif %}>
-        <label for="radio-{{ord}}">{{ord}}</label>
-        {% endfor %}
+          <div class="dropdown">
+            <select id="dropdown" name="ordinance">
+              {% for ord in ordinances %}
+              <option value="{{ord}}" {% if ord == request.GET.ord %} selected {% endif %}>{{ord}}</option>
+              {% endfor %}
+            </select>
+          </div>
       </div>
       <div class="confirm-btn">
         <button type="button">Zatwierdź</button>
