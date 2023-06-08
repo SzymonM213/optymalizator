@@ -37,7 +37,8 @@ function load_optimize_results() {
     'lvl': '',
     'ord': '',
   };
-
+  
+  
   document.querySelectorAll("input:checked").forEach((item) => {
     if (item.name == 'ref_level') {
       data['lvl'] = item.value;
@@ -45,6 +46,19 @@ function load_optimize_results() {
       data['ord'] = item.value;
     }
   });
+  
+  var selectLvl = document.getElementById('ref-lvl');
+  var selectedLvl = Array.from(selectLvl.selectedOptions).map(option => option.value);
+
+  var selectOrd = document.getElementById('ord-date');
+  var selectedOrd = Array.from(selectOrd.selectedOptions).map(option => option.value);
+
+  if (selectedLvl.length > 0) {
+    data['lvl'] = selectedLvl;
+  }
+  if (selectedOrd.length > 0) {
+    data['ord'] = selectedOrd;
+  }
 
   $.ajax({
     type: 'GET',
@@ -78,6 +92,34 @@ function load_optimize_results() {
   });
 }
 
-$(document).on('click', '.confirm-btn', function() {
-  load_optimize_results();
+// $(document).on('click', '.confirm-btn', function() {
+//   load_optimize_results();
+// });
+
+document.getElementById('getSubstitutes').addEventListener('submit', (event) => {
+
+  event.preventDefault();
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+  
+  var selectLvl = document.getElementById('ref-lvl');
+  var selectedLvl = Array.from(selectLvl.selectedOptions).map(option => option.value);
+
+  var selectOrd = document.getElementById('ord-date');
+  var selectedOrd = Array.from(selectOrd.selectedOptions).map(option => option.value);
+
+  $.ajax({
+    type: 'GET',
+    url: '/get-optimize-results',
+    data: {
+      'id': id,
+      'lvl': selectedLvl.toString(),
+      'ord': selectedOrd.toString(),
+    },
+    success: function(response) {
+    },
+  });
+
+
 });

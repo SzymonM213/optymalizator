@@ -20,27 +20,29 @@
     <h1>Znalezione odpowiedniki</h1>
     <div class="options">
       <div>
-        <h2>Poziom refundacji:</h2>
-        <div class="dropdown">
-          <select id="dropdown" name="ref_level">
-            {% for lvl in ref_levels %}
-            <option value="{{lvl}}" {% if lvl == request.GET.lvl %} selected {% endif %}>{{lvl}}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div>
-        <h2>Rozporządzenie:</h2>
+        <form method="GET" id="getSubstitutes">
+          <h2>Poziom refundacji:</h2>
           <div class="dropdown">
-            <select id="dropdown" name="ordinance">
-              {% for ord in ordinances %}
-              <option value="{{ord}}" {% if ord == request.GET.ord %} selected {% endif %}>{{ord}}</option>
-              {% endfor %}
-            </select>
+              <select id="ref-lvl" name="ref_level">
+                {% for lvl in ref_levels %}
+                <option value="{{lvl}}" {% if lvl == request.GET.lvl %} selected {% endif %}>{{lvl}}</option>
+                {% endfor %}
+              </select>
+            </div>
           </div>
-      </div>
-      <div class="confirm-btn">
-        <button type="button">Zatwierdź</button>
+          <div>
+            <h2>Rozporządzenie:</h2>
+            <div class="dropdown">
+              <select id="ord-date" name="ordinance">
+                {% for ord in ordinances %}
+                <option value="{{ord}}" {% if ord == request.GET.ord %} selected {% endif %}>{{ord}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="confirm-btn">
+            <button type="submit" onclick="">Zatwierdź</button>
+        </form>
       </div>
     </div>
 
