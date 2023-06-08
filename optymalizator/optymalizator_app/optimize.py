@@ -1,7 +1,7 @@
 from .models import LekRefundowany, DaneLeku
 from django.db.models import F
 
-def find_substitutes(drug):
+def find_substitutes(drug, lvl, ord):
     # NOTE:
     # To jest tylko tymczasowe rozwiazanie.
     # Funkcja Szymona obecnie się wykrzacza, bo baza danych była zmieniana
@@ -13,13 +13,21 @@ def find_substitutes(drug):
     dose = drug.dawka
     package_content = drug.zawartosc_opakowania
 
-    # the substitutes remain the same regardless of the refundation level and date
-
-    # TODO:
+    # TODO: znaleźć odpowiedniki
 
     substitutes = LekRefundowany.objects.filter(substancja_czynna=active_substance)
 
-    return substitutes
+    # TODO: wyniki należy zwracać w formie listy jsonów o poniższych polach
+    return [{
+            'pk': s.pk,
+            'ean': s.ean,
+            'nazwa': s.nazwa,
+            'postac': s.postac,
+            'dawka': s.dawka,
+            'zawartosc_opakowania': '',
+            'zakres_wskazan': '',
+            'cena': '0 zł',
+        } for s in substitutes]   
 
 def find_ref_levels(drug):
     ean = drug.ean

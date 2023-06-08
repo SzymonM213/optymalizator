@@ -43,12 +43,24 @@ def optimize(request):
 
     LicznikWyszukan.objects.filter(ean=drug.ean).update(ctr=F('ctr')+1)
     context = {
+        'drugs': find_substitutes(drug, lvl, ord),
         'ref_levels': find_ref_levels(drug),
-        'drugs': find_substitutes(drug),
         'ordinances': find_ordinances(drug, lvl),
     }
 
     return render(request, 'optimize/optimize.html', context)
+
+def get_optimize_results(request):
+    if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
+
+    id = request.GET.get('id', None)
+    lvl = request.GET.get('lvl', None)
+    ord = request.GET.get('ord', None)
+
+    try: drug = LekRefundowany.objects.get(pk=id)
+    except: return redirect('home')
+
+    return JsonResponse({'drugs': find_substitutes(drug, lvl, ord)})
 
 @csrf_exempt
 def clear(request):

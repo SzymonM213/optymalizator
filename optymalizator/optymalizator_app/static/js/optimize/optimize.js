@@ -29,13 +29,10 @@ $(document).ready(function() {
   backBtn.addEventListener("click", () => {
     window.history.back();
   });
-
 });
 
-// z jakiegoś powodu jquery nie działa
-confirm_btn = document.querySelector(".confirm-btn");
-confirm_btn.addEventListener("click", () => {
-  let data = {
+function load_optimize_results() {
+  data = {
     'id': new URLSearchParams(window.location.search).get('id'),
     'lvl': '',
     'ord': '',
@@ -49,6 +46,38 @@ confirm_btn.addEventListener("click", () => {
     }
   });
 
-  const params = new URLSearchParams(data);
-  window.location.href = '/optimize?' + params.toString();
+  $.ajax({
+    type: 'GET',
+    url: '/get-optimize-results',
+    data: data,
+    success: function(response) {
+      html = '';
+      if (response.length == 0) {
+        html += '<h1 align="center">Nie znaleziono odpowiedników</h1>';
+      } else {
+        response.drugs.forEach((item) => {
+          html += '<li class="card" data-id="' + item.pk + '">';
+          html += '<p class="ean">EAN: 0' + item.ean + '</p>';
+          html += '<div class="main-content">';
+          html += '<div class="left">';
+          html += '<p>' + item.nazwa + '</p>';
+          html += '<p>' + item.postac + '</p>';
+          html += '<p>' + item.dawka + '</p>';
+          html += '<p>' + item.zawartosc_opakowania + '</p>';
+          html += '<p>' + item.zakres_wskazan + '</p>';
+          html += '</div>';
+          html += '<div class="right">';
+          html += '<p>' + item.cena + '</p>';
+          html += '</div>';
+          html += '</div>';
+          html += '</li>';
+        });
+      }
+      $('.optimize-results').html(html);
+    },
+  });
+}
+
+$(document).on('click', '.confirm-btn', function() {
+  load_optimize_results();
 });

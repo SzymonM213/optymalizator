@@ -46,29 +46,31 @@
       </div>
     </div>
 
-    {% if not drugs %}
-      <h1 align="center">Nie znaleziono odpowiedników</h1>
-    {% else %}
-    <ul>
-      {% for drug in drugs %}
-      <li class="card" data-id="{{drug.pk}}">
-        <p class="ean">EAN: 0{{drug.ean}}</p>
-        <div class="main-content">
-          <div class="left">
-            <p>{{drug.nazwa}}</p>
-            <p>{{drug.postac}}</p>
-            <p>{{drug.dawka}}</p>
-            <p>{{drug.zawartosc_opakowania}}</p>
-            <p>{{drug.zakres_wskazan}}</p>
+    <div class="optimize-results">
+      {% if not drugs %}
+        <h1 align="center">Nie znaleziono odpowiedników</h1>
+      {% else %}
+      <ul>
+        {% for drug in drugs %}
+        <li class="card" data-id="{{drug.pk}}">
+          <p class="ean">EAN: 0{{drug.ean}}</p>
+          <div class="main-content">
+            <div class="left">
+              <p>{{drug.nazwa}}</p>
+              <p>{{drug.postac}}</p>
+              <p>{{drug.dawka}}</p>
+              <p>{{drug.zawartosc_opakowania}}</p>
+              <p>{{drug.zakres_wskazan}}</p>
+            </div>
+            <div class="right">
+              <p>{{ drug.cena }}</p>
+            </div>
           </div>
-          <div class="right">
-            <p>{{ drug.cena }}</p>
-          </div>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-    {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
   </div>
 
   <div class="top-btn">
