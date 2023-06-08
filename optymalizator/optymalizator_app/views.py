@@ -57,6 +57,8 @@ def get_optimize_results(request):
     lvl = request.GET.get('lvl', None)
     ord = request.GET.get('ord', None)
 
+    print(id, lvl, ord)
+
     try: drug = LekRefundowany.objects.get(pk=id)
     except: return redirect('home')
 
