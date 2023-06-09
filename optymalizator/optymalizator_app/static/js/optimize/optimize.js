@@ -119,7 +119,7 @@ document.getElementById('getSubstitutes').addEventListener('submit', (event) => 
           html += '<p>' + item.zakres_wskazan + '</p>';         
           html += '</div>';
           html += '<div class="right">';
-          html += '<p>' + item.cena + '</p>';
+          html += '<p>' + item.cena + ' zł</p>';
           html += '</div>';
           html += '</div>';
           html += '</li>';

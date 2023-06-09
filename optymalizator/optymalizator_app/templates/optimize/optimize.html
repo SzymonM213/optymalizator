@@ -19,10 +19,11 @@
   <div class="container">
     <h1>Znalezione odpowiedniki</h1>
     <div class="options">
-      <div>
-        <form method="GET" id="getSubstitutes">
-          <h2>Poziom refundacji:</h2>
-          <div class="dropdown">
+      <form method="GET" id="getSubstitutes">
+        <div class="left">
+          <div>
+            <h2>Poziom refundacji:</h2>
+            <div class="dropdown">
               <select id="ref-lvl" name="ref_level">
                 {% for lvl in ref_levels %}
                 <option value="{{lvl}}" {% if lvl == request.GET.lvl %} selected {% endif %}>{{lvl}}</option>
@@ -32,19 +33,17 @@
           </div>
           <div>
             <h2>Rozporządzenie:</h2>
-            <div class="dropdown">
-              <select id="ord-date" name="ordinance">
-                {% for ord in ordinances %}
-                <option value="{{ord}}" {% if ord == request.GET.ord %} selected {% endif %}>{{ord}}</option>
-                {% endfor %}
-              </select>
-            </div>
+            <select id="ord-date" name="ordinance">
+              {% for ord in ordinances %}
+              <option value="{{ord}}" {% if ord == request.GET.ord %} selected {% endif %}>{{ord}}</option>
+              {% endfor %}
+            </select>
           </div>
-          {% comment %} <div class="confirm-btn"> {% endcomment %}
-          <div>
-            <button type="submit" onclick="">Zatwierdź</button>
-        </form>
-      </div>
+        </div>
+        <div class="right">
+          <button type="submit" onclick="">Zatwierdź</button>
+        </div>
+      </form>
     </div>
 
     <div class="optimize-results">
@@ -64,7 +63,7 @@
               <p>{{drug.zakres_wskazan}}</p>
             </div>
             <div class="right">
-              <p>{{ drug.cena }}</p>
+              <p>{{ drug.cena }} zł</p>
             </div>
           </div>
         </li>

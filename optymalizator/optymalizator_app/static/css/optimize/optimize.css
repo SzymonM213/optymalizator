@@ -155,16 +155,78 @@ h1 {
   color: #fff;
 }
 
-.options {
-  width: 100%;
+.options form {
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
-.options div {
+.options form > div {
+  display: flex;
+  flex-direction: row;
+}
+
+.options .left {
+  width: 70%;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .options form {
+    flex-direction: column;
+  }
+  .options .left {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.options .left > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.options select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+}
+
+.options option {
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+}
+
+.options option:hover,
+.options option:checked {
+  background-color: #3a2e5c;
+  color: #fff;
+}
+
+.options button {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.options button:hover {
+  background-color: #3a2e5c;
+  color: #fff;
 }
