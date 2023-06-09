@@ -118,7 +118,7 @@ def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
             'zawartosc_opakowania': s[0].zawartosc_opakowania,
             'zakres_wskazan': s[3],
             'cena': s[1],
-            'liczba_opakowan': s[2],
+            'liczba_opakowan': int(s[2]),
         } for s in substitutes]   
 
 def find_ref_levels(drug):

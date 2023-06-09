@@ -119,6 +119,7 @@ document.getElementById('getSubstitutes').addEventListener('submit', (event) => 
           html += '<p>' + item.zakres_wskazan + '</p>';         
           html += '</div>';
           html += '<div class="right">';
+          html += '<p><i class="fas fa-times"></i>' + item.liczba_opakowan + '</p>';
           html += '<p>' + item.cena + ' zł</p>';
           html += '</div>';
           html += '</div>';

@@ -71,6 +71,15 @@ h1 {
   justify-content: center;
 }
 
+@media screen and (max-width: 900px) {
+  .card > .main-content > .left {
+    width: 75%;
+  }
+  .card > .main-content > .right {
+    width: 25%;
+  }
+}
+
 .card > .main-content > .left > p {
   margin-right: 2rem;
 }
