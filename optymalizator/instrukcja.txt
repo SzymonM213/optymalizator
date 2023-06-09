@@ -1,0 +1,15 @@
+Poniżej znajduje się lista list wspieranych wyrażeń służących do wyrażania
+przeliczalności leku. Wyrażenia z każdego wiersza podczas działania programu
+traktowane są tożsamo
+
+[
+  [szt., sztuki, sztuka, sztuk],
+  [fiol., fiolki, fiolka, fiolek],
+  [amp., ampułki, ampułka, ampułek],
+  [tabl., tabletki, tabletka, tabletek],
+  [kaps., kapsułki, kapsułka, kapsułek],
+  [sasz., saszetki, saszetka, saszetek],
+]
+
+Pokazywane odpowiedniki zawierają z prawej strony liczbę opakowań, które trzeba
+kupić i ŁĄCZNY koszt zakupu.
