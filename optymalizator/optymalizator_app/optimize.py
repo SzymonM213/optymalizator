@@ -41,7 +41,7 @@ def active_ingr_to_dose(drug):
 def in_range(drug_amount, sub_amount):
     result = 0;
     closest_amount = math.ceil(drug_amount / sub_amount) * sub_amount
-    if closest_amount * 1.1 >= drug_amount and closest_amount >= drug_amount:
+    if closest_amount <= drug_amount * 1.1 and closest_amount >= drug_amount:
         result = closest_amount / sub_amount
     return result
 
@@ -72,28 +72,33 @@ def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
         if sub_ingrs == None:
             continue
         for ingr in drug_ingrs.keys():
+            packs = in_range(drug_amount, get_amount(substitute.zawartosc_opakowania))
             if ingr not in sub_ingrs.keys():
                 break
             elif not compare_active_ingr_amount(drug_ingrs[ingr], sub_ingrs[ingr]):
                 break
-            elif not in_range(drug_amount, get_amount(substitute.zawartosc_opakowania)):
+            elif not packs:
                 break
             else:
-                price = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date).values('wysokosc_doplaty')[0]
-                substitutes.append((substitute, price))
+                price = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date). \
+                        values('wysokosc_doplaty')[0]['wysokosc_doplaty']
+                indications = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date). \
+                             values('zakres_wskazan')[0]['zakres_wskazan']
+                price = "{:.2f}".format(price * packs / 100)
+                substitutes.append((substitute, price, packs, indications))
             
-    # substitutes = sorted(substitutes, key=lambda x: (x.wysokosc_doplaty, x.nazwa))
+    substitutes = sorted(substitutes, key=lambda x: (float(x[1]), x[0].nazwa))
 
-    # TODO: wyniki należy zwracać w formie listy jsonów o poniższych polach
     return [{
             'pk': s[0].pk,
             'ean': s[0].ean,
             'nazwa': s[0].nazwa,
             'postac': s[0].postac,
             'dawka': s[0].dawka,
-            'zawartosc_opakowania': '',
-            'zakres_wskazan': '',
-            'cena': s[1]['wysokosc_doplaty']/100,
+            'zawartosc_opakowania': s[0].zawartosc_opakowania,
+            'zakres_wskazan': s[3],
+            'cena': s[1],
+            'liczba_opakowan': s[2],
         } for s in substitutes]   
 
 def find_ref_levels(drug):

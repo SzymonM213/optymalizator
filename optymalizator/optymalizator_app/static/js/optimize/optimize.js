@@ -116,7 +116,7 @@ document.getElementById('getSubstitutes').addEventListener('submit', (event) => 
           html += '<p>' + item.postac + '</p>';
           html += '<p>' + item.dawka + '</p>';
           html += '<p>' + item.zawartosc_opakowania + '</p>';
-          html += '<p>' + item.zakres_wskazan + '</p>';
+          html += '<p>' + item.zakres_wskazan + '</p>';         
           html += '</div>';
           html += '<div class="right">';
           html += '<p>' + item.cena + '</p>';
