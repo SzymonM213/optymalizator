@@ -49,7 +49,21 @@ $(document).ready(function () {
   });
 
   $('.help').click(function () {
-    console.log('help');
-    // TODO: download help file
+    $.ajax({
+      type: 'GET',
+      url: '/get_help',
+      success: function (data) {
+        var blob = new Blob([data.instrukcja], {type: 'text/plain'});
+        var a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = 'instrukcja.txt';
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(a.href);
+      },
+      error: function (data) {
+        alert('Wystąpił błąd podczas pobierania instrukcji.');
+      }
+    });
   });
 });

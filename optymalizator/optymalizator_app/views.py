@@ -78,3 +78,8 @@ def ref_levels(request):
     if drug == None: return JsonResponse({'success': False, 'error': 'no drug'})
 
     return JsonResponse({'lvls': find_ref_levels(drug)})
+
+def get_help(request):
+    if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
+    with open('instrukcja.txt', 'r') as f:
+        return JsonResponse({'instrukcja': f.read()})

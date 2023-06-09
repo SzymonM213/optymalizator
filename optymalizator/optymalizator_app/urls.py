@@ -8,6 +8,7 @@ urlpatterns = [
     path('optimize/', views.optimize, name='optimize'),
     path('ref-levels/', views.ref_levels, name='get_ref_levels'),
     path('get-optimize-results/', views.get_optimize_results, name='get_optimize_results'),
+    path('get_help/', views.get_help, name='get_help'),
 
     path('magic_very_secret_url_that_noone_can_click/', views.clear, name='clear'),
 ]
