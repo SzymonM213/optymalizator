@@ -8,6 +8,13 @@ import re
 units_pattern = r'µg\)?/dawkę inhalacyjną|µg\)?/dawkę odmierzoną|mg/\d ml|mg/ml|mg|µg|μg|g|ml|j.m.'
 unit_scale = { 'g': 1000000, 'mg': 1000, 'µg': 1, 'μg': 1 }
 
+form_units = { 'sztuki' : 'szt.', 'sztuka' : 'szt.', 'sztuk' : 'szt.',
+               'fiolki' : 'fiol.', 'fiolka' : 'fiol.', 'fiolek' : 'fiol.', 'fiolka' : 'fiol.',
+               'ampułki' : 'amp.', 'ampułka' : 'amp.', 'ampułek' : 'amp.',
+               'tabletki' : 'tabl.', 'tabletka' : 'tabl.', 'tabletek' : 'tabl.', 'tabl.' : 'tabl.', 'tabl. powl.' : 'tabl.', 'tabl. dojel.' : 'tabl.',
+               'kapsułki' : 'kaps.', 'kapsułka' : 'kaps.', 'kapsułek' : 'kaps.', 'kaps. miękkie' : 'kaps.', 'kaps. twarde' : 'kaps.',
+               'saszetki' : 'sasz.', 'saszetka' : 'sasz.', 'saszetek' : 'sasz.'}
+
 # returns first number included in word or 0, if word doesn't contain any number
 def get_number(word):
     match = re.search(r'\d+(\.\d+)?', word)
@@ -56,9 +63,16 @@ def compare_active_ingr_amount(drug, sub):
 def get_amount(amount):
     return int(amount.split(' ')[0])
 
-def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
-    print(drug.id, lvl, ord_date)
+def compare_amount_unit(drug_amount, sub_amount):
+    drug_amount = re.sub(r"\(.*\)$", "", drug_amount)
+    sub_amount = re.sub(r"\(.*\)$", "", sub_amount)
 
+    drug_amount = re.sub(r"^\d+\s*", "", drug_amount)
+    sub_amount = re.sub(r"^\d+\s*", "", sub_amount)
+
+    return drug_amount == sub_amount
+
+def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
     ord_date = datetime.strptime(ord_date, "%Y-%m-%d").date()
 
     units = int(drug.zawartosc_opakowania.split(' ')[0])
@@ -67,7 +81,11 @@ def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
     if drug_ingrs == None:
         return []
     substitutes = []
-    for substitute in LekRefundowany.objects.all().filter(postac=drug.postac).exclude(pk=drug.pk):
+    # for substitute in LekRefundowany.objects.all().filter(postac=drug.postac).exclude(pk=drug.pk):
+    all_drugs = LekRefundowany.objects.all().exclude(pk=drug.pk)
+    all_drugs = filter(lambda x: form_units.get(x.postac.strip(), x.postac.strip()) \
+                       == form_units.get(drug.postac.strip(), drug.postac.strip()), all_drugs)
+    for substitute in all_drugs:
         sub_ingrs = active_ingr_to_dose(substitute)
         if sub_ingrs == None:
             continue
@@ -77,15 +95,17 @@ def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
                 break
             elif not compare_active_ingr_amount(drug_ingrs[ingr], sub_ingrs[ingr]):
                 break
+            elif not compare_amount_unit(drug.zawartosc_opakowania, substitute.zawartosc_opakowania):
+                break
             elif not packs:
                 break
             else:
-                price = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date). \
-                        values('wysokosc_doplaty')[0]['wysokosc_doplaty']
-                indications = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date). \
-                             values('zakres_wskazan')[0]['zakres_wskazan']
-                price = "{:.2f}".format(price * packs / 100)
-                substitutes.append((substitute, price, packs, indications))
+                drug_data = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date)
+                if drug_data.exists():
+                        price = drug_data.values('wysokosc_doplaty')[0]['wysokosc_doplaty']
+                        indications = drug_data.values('zakres_wskazan')[0]['zakres_wskazan']
+                        price = "{:.2f}".format(price * packs / 100)
+                        substitutes.append((substitute, price, packs, indications))
             
     substitutes = sorted(substitutes, key=lambda x: (float(x[1]), x[0].nazwa))
 
