@@ -3,6 +3,7 @@ import re
 
 units_pattern = r'µg\)?/dawkę inhalacyjną|µg\)?/dawkę odmierzoną|mg/\d ml|mg/ml|mg|µg|μg|g|ml|j.m.'
 unit_scale = { 'g': 1000000, 'mg': 1000, 'µg': 1, 'μg': 1 }
+abbreviations = { 'tabletki': 'tabl.' }
 
 # returns first number included in word or 0, if word doesn't contain any number
 def get_number(word):
@@ -60,13 +61,17 @@ def find_substitutes(drug):
     for substitute in LekRefundowany.objects.all().filter(postac=drug.postac).exclude(pk=drug.pk):
         sub_ingrs = active_ingr_to_dose(substitute)
         if sub_ingrs == None:
+            print('chuj1')
             continue
         for ingr in drug_ingrs.keys():
             if ingr not in sub_ingrs.keys():
+                print('chuj2')
                 break
             elif not compare_active_ingr_amount(drug_ingrs[ingr], sub_ingrs[ingr]):
+                print('chuj3')
                 break
             elif not in_range(drug_amount, get_amount(substitute.zawartosc_opakowania)):
+                print('chuj4')
                 break
             else:
                 substitutes.append(substitute)

@@ -37,13 +37,14 @@ def optimize(request):
 
     id = request.GET.get('id', None)
     lvl = request.GET.get('lvl', None)
+
     
     try: drug = LekRefundowany.objects.get(pk=id)
     except: return redirect('home')
 
     LicznikWyszukan.objects.filter(ean=drug.ean).update(ctr=F('ctr')+1)
     context = {
-        'drugs': find_substitutes(drug, lvl, ord),
+        'drugs': find_substitutes(drug, lvl),
         'ref_levels': find_ref_levels(drug),
         'ordinances': find_ordinances(drug, lvl),
     }
@@ -55,14 +56,12 @@ def get_optimize_results(request):
 
     id = request.GET.get('id', None)
     lvl = request.GET.get('lvl', None)
-    ord = request.GET.get('ord', None)
-
-    print(id, lvl, ord)
+    ord_date = request.GET.get('ord', None)
 
     try: drug = LekRefundowany.objects.get(pk=id)
     except: return redirect('home')
 
-    return JsonResponse({'drugs': find_substitutes(drug, lvl, ord)})
+    return JsonResponse({'drugs': find_substitutes(drug, lvl, ord_date)})
 
 @csrf_exempt
 def clear(request):
