@@ -16,13 +16,14 @@ echo "Creating database"
 sudo -iu postgres psql -c "CREATE DATABASE lekidb;"
 echo "Granting privileges"
 sudo -iu postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE lekidb TO root;"
-# echo "Migrating"
+echo "Migrating"
 python3 ./optymalizator/manage.py makemigrations
+python3 ./optymalizator/manage.py makemigrations optymalizator_app
 python3 ./optymalizator/manage.py migrate
 echo "Uncommenting urls"
 sed -i '21s/#//' ./optymalizator/optymalizator/urls.py
 sed -i '22s/^#//' ./optymalizator/optymalizator/urls.py
-# echo "Adding data"
+echo "Adding data"
 cd database
 python3 ./lekrefundowany_upload.py
 python3 ./daneoleku_upload.py
