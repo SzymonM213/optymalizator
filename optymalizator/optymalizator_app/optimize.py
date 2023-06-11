@@ -44,6 +44,7 @@ def active_ingr_to_dose(drug):
             result[ingredients[i]] = (get_number(doses[i]), get_unit(doses[-1]))
         else:
             result[ingredients[i]] = (get_number(doses[i]), get_unit(doses[i]))
+    return result
 
 def in_range(drug_amount, sub_amount):
     result = 0;
@@ -85,11 +86,13 @@ def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
     all_drugs = LekRefundowany.objects.all().exclude(pk=drug.pk)
     all_drugs = filter(lambda x: form_units.get(x.postac.strip(), x.postac.strip()) \
                        == form_units.get(drug.postac.strip(), drug.postac.strip()), all_drugs)
+    continue_flag = False
     for substitute in all_drugs:
         sub_ingrs = active_ingr_to_dose(substitute)
         if sub_ingrs == None:
             continue
         for ingr in drug_ingrs.keys():
+            continue_flag = True
             packs = in_range(drug_amount, get_amount(substitute.zawartosc_opakowania))
             if ingr not in sub_ingrs.keys():
                 break
@@ -99,13 +102,14 @@ def find_substitutes(drug, lvl, ord_date = "2023-01-01"):
                 break
             elif not packs:
                 break
-            else:
-                drug_data = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date)
-                if drug_data.exists():
-                        price = drug_data.values('wysokosc_doplaty')[0]['wysokosc_doplaty']
-                        indications = drug_data.values('zakres_wskazan')[0]['zakres_wskazan']
-                        price = "{:.2f}".format(price * packs / 100)
-                        substitutes.append((substitute, price, packs, indications))
+            continue_flag = False
+        if not continue_flag:
+            drug_data = DaneLeku.objects.filter(ean=substitute.ean, poziom_odplatnosci=lvl, data_rozporzadzenia=ord_date)
+            if drug_data.exists():
+                    price = drug_data.values('wysokosc_doplaty')[0]['wysokosc_doplaty']
+                    indications = drug_data.values('zakres_wskazan')[0]['zakres_wskazan']
+                    price = "{:.2f}".format(price * packs / 100)
+                    substitutes.append((substitute, price, packs, indications))
             
     substitutes = sorted(substitutes, key=lambda x: (float(x[1]), x[0].nazwa))
 
