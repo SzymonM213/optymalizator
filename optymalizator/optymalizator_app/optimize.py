@@ -11,8 +11,8 @@ unit_scale = { 'g': 1000000, 'mg': 1000, 'µg': 1, 'μg': 1 }
 form_units = { 'sztuki' : 'szt.', 'sztuka' : 'szt.', 'sztuk' : 'szt.',
                'fiolki' : 'fiol.', 'fiolka' : 'fiol.', 'fiolek' : 'fiol.', 'fiolka' : 'fiol.',
                'ampułki' : 'amp.', 'ampułka' : 'amp.', 'ampułek' : 'amp.',
-               'tabletki' : 'tabl.', 'tabletka' : 'tabl.', 'tabletek' : 'tabl.', 'tabl.' : 'tabl.', 'tabl. powl.' : 'tabl.', 'tabl. dojel.' : 'tabl.',
-               'kapsułki' : 'kaps.', 'kapsułka' : 'kaps.', 'kapsułek' : 'kaps.', 'kaps. miękkie' : 'kaps.', 'kaps. twarde' : 'kaps.',
+               'tabletki' : 'tabl.', 'tabletka' : 'tabl.', 'tabletek' : 'tabl.',
+               'kapsułki' : 'kaps.', 'kapsułka' : 'kaps.', 'kapsułek' : 'kaps.',
                'saszetki' : 'sasz.', 'saszetka' : 'sasz.', 'saszetek' : 'sasz.'}
 
 # returns first number included in word or 0, if word doesn't contain any number
