@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.db.models import F
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.staticfiles import finders
 
 from .models import LekRefundowany, LicznikWyszukan, DaneLeku
 
@@ -81,5 +82,7 @@ def ref_levels(request):
 
 def get_help(request):
     if request.method != 'GET': return JsonResponse({'success': False, 'error': 'wrong method'})
-    with open('instrukcja.txt', 'r') as f:
+    file_path = finders.find('instrukcja.txt')
+    if file_path == None: return JsonResponse({'success': False, 'error': 'no file'})
+    with open(file_path, 'r') as f:
         return JsonResponse({'instrukcja': f.read()})
